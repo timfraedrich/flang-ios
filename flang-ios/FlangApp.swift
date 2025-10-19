@@ -4,7 +4,9 @@ import SwiftUI
 struct FlangApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationStack {
+                HomeView()
+            }
         }
     }
 }

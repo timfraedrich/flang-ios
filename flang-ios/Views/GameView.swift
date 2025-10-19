@@ -1,18 +1,16 @@
 import SwiftUI
 
-struct ContentView: View {
+struct GameView: View {
     
     @State private var gameState = GameState()
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                info.rotationEffect(.degrees(180))
-                BoardView(gameState: gameState)
-                info
-            }
-            .padding()
+        VStack {
+            info.rotationEffect(.degrees(180))
+            BoardView(gameState: gameState)
+            info
         }
+        .padding()
     }
     
     var info: some View {
@@ -33,5 +31,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    GameView()
 }
