@@ -1,10 +1,3 @@
-//
-//  BoardPosition.swift
-//  flang-ios
-//
-//  Created by Tim Fraedrich on 16.10.25.
-//
-
 import Foundation
 
 struct BoardPosition: Hashable, Equatable {

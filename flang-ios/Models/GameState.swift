@@ -1,85 +1,63 @@
-//
-//  GameState.swift
-//  flang-ios
-//
-//  Created by Tim Fraedrich on 16.10.25.
-//
-
 import Foundation
 import Observation
 
 @Observable
 class GameState {
-    var board: [BoardPosition: Piece] = [:]
+    var board: Board
+    var moveGenerator: MoveGenerator
     var selectedPosition: BoardPosition?
-    var currentTurn: PieceColor = .white
     var legalMoves: Set<BoardPosition> = []
 
     init() {
-        setupInitialPosition()
+        var newBoard = Board()
+        newBoard.setupDefaultPosition()
+        self.board = newBoard
+        self.moveGenerator = MoveGenerator(board: newBoard)
     }
 
-    func setupInitialPosition() {
-        // Clear board
-        board.removeAll()
-
-        // Flang DEFAULT starting position from Android app
-        // Row 0 (rank 1): "  PRHFUK" - White back rank
-        board[BoardPosition(row: 0, col: 2)] = Piece(type: .pawn, color: .white)
-        board[BoardPosition(row: 0, col: 3)] = Piece(type: .rook, color: .white)
-        board[BoardPosition(row: 0, col: 4)] = Piece(type: .horse, color: .white)
-        board[BoardPosition(row: 0, col: 5)] = Piece(type: .flanger, color: .white)
-        board[BoardPosition(row: 0, col: 6)] = Piece(type: .uni, color: .white)
-        board[BoardPosition(row: 0, col: 7)] = Piece(type: .king, color: .white)
-
-        // Row 1 (rank 2): "  PPPPPP" - White pawns
-        for col in 2..<8 {
-            board[BoardPosition(row: 1, col: col)] = Piece(type: .pawn, color: .white)
-        }
-
-        // Rows 2-5 are empty
-
-        // Row 6 (rank 7): "pppppp  " - Black pawns
-        for col in 0..<6 {
-            board[BoardPosition(row: 6, col: col)] = Piece(type: .pawn, color: .black)
-        }
-
-        // Row 7 (rank 8): "kufhrp  " - Black back rank
-        board[BoardPosition(row: 7, col: 0)] = Piece(type: .king, color: .black)
-        board[BoardPosition(row: 7, col: 1)] = Piece(type: .uni, color: .black)
-        board[BoardPosition(row: 7, col: 2)] = Piece(type: .flanger, color: .black)
-        board[BoardPosition(row: 7, col: 3)] = Piece(type: .horse, color: .black)
-        board[BoardPosition(row: 7, col: 4)] = Piece(type: .rook, color: .black)
-        board[BoardPosition(row: 7, col: 5)] = Piece(type: .pawn, color: .black)
-
-        currentTurn = .white
-        selectedPosition = nil
-        legalMoves.removeAll()
+    // Get piece at position for UI display
+    func getPiece(at position: BoardPosition) -> Piece? {
+        let index = Board.index(x: position.col, y: position.row)
+        let state = board.get(at: index)
+        let type = state.type
+        guard type != .none else { return nil }
+        let pieceType = state.type
+        let color = state.color
+        let frozen = state.frozen
+        return Piece(type: pieceType, color: color, frozen: frozen)
     }
 
+    // Handle position selection and moves
     func selectPosition(_ position: BoardPosition) {
+        let index = Board.index(x: position.col, y: position.row)
         // If no piece is selected
         if selectedPosition == nil {
             // Select this position if it has a piece of the current player's color
-            if let piece = board[position], piece.color == currentTurn {
-                selectedPosition = position
-                // For now, calculate simple legal moves (this will be replaced with C engine)
-                legalMoves = calculateLegalMoves(for: position)
-            }
-        } else if let selected = selectedPosition {
-            // If the same position is tapped, deselect
+            let state = board.get(at: index)
+            let type = state.type
+            guard type != .none else { return }
+            guard state.color == board.atMove else { return }
+            // Don't allow selecting frozen pieces
+            guard !state.frozen else { return }
+            selectedPosition = position
+            calculateLegalMoves(for: index)
+        }
+        // If a piece is already selected
+        else if let selected = selectedPosition {
+            let selectedIndex = Board.index(x: selected.col, y: selected.row)
+            // If tapping the same position, deselect
             if selected == position {
                 selectedPosition = nil
                 legalMoves.removeAll()
             }
             // If tapping another piece of the same color, switch selection
-            else if let piece = board[position], piece.color == currentTurn {
+            else if let piece = getPiece(at: position), piece.color == board.atMove, !piece.frozen {
                 selectedPosition = position
-                legalMoves = calculateLegalMoves(for: position)
+                calculateLegalMoves(for: index)
             }
             // If tapping a legal move destination, make the move
             else if legalMoves.contains(position) {
-                makeMove(from: selected, to: position)
+                makeMove(from: selectedIndex, to: index)
                 selectedPosition = nil
                 legalMoves.removeAll()
             }
@@ -91,40 +69,54 @@ class GameState {
         }
     }
 
-    private func makeMove(from: BoardPosition, to: BoardPosition) {
-        guard let piece = board[from] else { return }
-
-        // Move the piece
-        board[to] = piece
-        board.removeValue(forKey: from)
-
-        // Switch turns
-        currentTurn = currentTurn == .white ? .black : .white
+    // Calculate legal moves for a piece
+    private func calculateLegalMoves(for index: Board.Index) {
+        legalMoves.removeAll()
+        let state = board.get(at: index)
+        let moves = moveGenerator.generateMovesForPiece(at: index, state: state)
+        for move in moves {
+            let position = BoardPosition(row: Board.y(of: move.to), col: Board.x(of: move.to))
+            legalMoves.insert(position)
+        }
     }
 
-    // Temporary simple move calculation (will be replaced with C engine)
-    private func calculateLegalMoves(for position: BoardPosition) -> Set<BoardPosition> {
-        guard let piece = board[position] else { return [] }
+    // Make a move
+    private func makeMove(from: Board.Index, to: Board.Index) {
+        let state = board.get(at: from)
+        let color = state.color
+        let move = Move(
+            from: from,
+            to: to,
+            fromPieceState: state,
+            toPieceState: board.get(at: to),
+            previouslyFrozenPieceIndex: board.frozenPieceIndex(for: color)
+        )
+        board.executeMove(move)
+        moveGenerator.board = board // Update reference
+    }
 
-        var moves = Set<BoardPosition>()
+    // Check if game is over
+    func isGameOver() -> Bool {
+        return board.gameIsComplete()
+    }
 
-        // Simple placeholder logic - just allow moving to adjacent empty squares
-        let directions = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
-
-        for (dRow, dCol) in directions {
-            let newRow = position.row + dRow
-            let newCol = position.col + dCol
-
-            guard (0..<8).contains(newRow), (0..<8).contains(newCol) else { continue }
-
-            let newPos = BoardPosition(row: newRow, col: newCol)
-
-            // Can move to empty square or capture opponent piece
-            if board[newPos] == nil || board[newPos]?.color != piece.color {
-                moves.insert(newPos)
-            }
+    // Get winner if game is over
+    func getWinner() -> PieceColor? {
+        if board.hasWon(color: .white) {
+            .white
+        } else if board.hasWon(color: .black) {
+            .black
+        } else {
+            nil
         }
+    }
 
-        return moves
+    // Reset game
+    func reset() {
+        board = Board()
+        board.setupDefaultPosition()
+        moveGenerator = MoveGenerator(board: board)
+        selectedPosition = nil
+        legalMoves.removeAll()
     }
 }
