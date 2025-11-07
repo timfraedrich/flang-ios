@@ -3,6 +3,7 @@ import SwiftUI
 struct BoardView: View {
     
     @Bindable var gameState: GameState
+    let rotateBlackPieces: Bool
 
     var body: some View {
         VStack(spacing: .zero) {
@@ -10,12 +11,17 @@ struct BoardView: View {
                 HStack(spacing: .zero) {
                     ForEach(.zero..<Board.boardSize, id: \.self) { col in
                         let pos = BoardPosition(row: row, col: col)
-                        SquareView(
-                            position: pos,
-                            piece: gameState.getPiece(at: pos),
-                            isSelected: gameState.selectedPosition == pos,
-                            isLegalMove: gameState.legalMoves.contains(pos)
-                        )
+                        ZStack {
+                            let piece = gameState.getPiece(at: pos)
+                            SquareView(
+                                position: pos,
+                                isFrozen: piece?.frozen ?? false,
+                                hasPiece: piece != nil,
+                                isSelected: gameState.selectedPosition == pos,
+                                isLegalMove: gameState.legalMoves.contains(pos)
+                            )
+                            PieceView(piece: piece).rotationEffect(.degrees(rotateBlackPieces && piece?.color == .black ? 180 : 0))
+                        }
                         .onTapGesture { gameState.selectPosition(pos) }
                     }
                 }
@@ -26,5 +32,5 @@ struct BoardView: View {
 }
 
 #Preview {
-    BoardView(gameState: .init()).padding()
+    BoardView(gameState: .init(), rotateBlackPieces: true).padding()
 }

@@ -3,42 +3,36 @@ import Observation
 
 @Observable
 class GameState {
-    var board: Board
-    var moveGenerator: MoveGenerator
+
+    var game: Game
     var selectedPosition: BoardPosition?
     var legalMoves: Set<BoardPosition> = []
+    
+    var board: Board { game.board }
+    var atMove: PieceColor { game.atMove }
+    var winner: PieceColor? { game.winner }
 
-    init() {
-        var newBoard = Board()
-        newBoard.setupDefaultPosition()
-        self.board = newBoard
-        self.moveGenerator = MoveGenerator(board: newBoard)
+    init(game: Game = .init()) {
+        self.game = game
     }
-
-    // Get piece at position for UI display
+    
     func getPiece(at position: BoardPosition) -> Piece? {
         let index = Board.index(x: position.col, y: position.row)
-        let state = board.get(at: index)
-        let type = state.type
-        guard type != .none else { return nil }
-        let pieceType = state.type
-        let color = state.color
-        let frozen = state.frozen
-        return Piece(type: pieceType, color: color, frozen: frozen)
+        guard let piece = board[index], piece.type != .none else { return nil }
+        return piece
     }
 
-    // Handle position selection and moves
+    // MARK: - Move Selection & Execution
+    
     func selectPosition(_ position: BoardPosition) {
         let index = Board.index(x: position.col, y: position.row)
         // If no piece is selected
         if selectedPosition == nil {
             // Select this position if it has a piece of the current player's color
-            let state = board.get(at: index)
-            let type = state.type
-            guard type != .none else { return }
-            guard state.color == board.atMove else { return }
+            guard let piece = board[index], piece.type != .none else { return }
+            guard piece.color == atMove else { return }
             // Don't allow selecting frozen pieces
-            guard !state.frozen else { return }
+            guard !piece.frozen else { return }
             selectedPosition = position
             calculateLegalMoves(for: index)
         }
@@ -51,7 +45,7 @@ class GameState {
                 legalMoves.removeAll()
             }
             // If tapping another piece of the same color, switch selection
-            else if let piece = getPiece(at: position), piece.color == board.atMove, !piece.frozen {
+            else if let piece = getPiece(at: position), piece.color == atMove, !piece.frozen {
                 selectedPosition = position
                 calculateLegalMoves(for: index)
             }
@@ -68,54 +62,45 @@ class GameState {
             }
         }
     }
-
-    // Calculate legal moves for a piece
+    
     private func calculateLegalMoves(for index: Board.Index) {
         legalMoves.removeAll()
-        let state = board.get(at: index)
-        let moves = moveGenerator.generateMovesForPiece(at: index, state: state)
-        for move in moves {
-            let position = BoardPosition(row: Board.y(of: move.to), col: Board.x(of: move.to))
+        let targets = game.legalTargets(for: index)
+        for targetIndex in targets {
+            let position = BoardPosition(row: Board.y(of: targetIndex), col: Board.x(of: targetIndex))
             legalMoves.insert(position)
         }
     }
-
-    // Make a move
+    
     private func makeMove(from: Board.Index, to: Board.Index) {
-        let state = board.get(at: from)
-        let color = state.color
-        let move = Move(
-            from: from,
-            to: to,
-            fromPieceState: state,
-            toPieceState: board.get(at: to),
-            previouslyFrozenPieceIndex: board.frozenPieceIndex(for: color)
-        )
-        board.executeMove(move)
-        moveGenerator.board = board // Update reference
+        let action = Action.move(from: from, to: to)
+        try? game.perform(action)
     }
 
-    // Check if game is over
-    func isGameOver() -> Bool {
-        return board.gameIsComplete()
+    // MARK: - Game Control
+    
+    func reset() throws {
+        try game.reset()
+        resetShownMoves()
+    }
+    
+    func back() throws {
+        try game.back()
+        resetShownMoves()
+    }
+    
+    func forward() throws {
+        try game.forward()
+        resetShownMoves()
     }
 
-    // Get winner if game is over
-    func getWinner() -> PieceColor? {
-        if board.hasWon(color: .white) {
-            .white
-        } else if board.hasWon(color: .black) {
-            .black
-        } else {
-            nil
-        }
+    func resign() throws {
+        let action = Action.resign(color: atMove)
+        try game.perform(action)
+        resetShownMoves()
     }
-
-    // Reset game
-    func reset() {
-        board = Board()
-        board.setupDefaultPosition()
-        moveGenerator = MoveGenerator(board: board)
+    
+    private func resetShownMoves() {
         selectedPosition = nil
         legalMoves.removeAll()
     }

@@ -1,92 +1,48 @@
-import Foundation
-
-enum PieceType: RawRepresentable {
+struct Piece: Equatable {
     
-    case none
-    case pawn
-    case horse
-    case rook
-    case flanger
-    case uni
-    case king
+    private static let TYPE_MASK: UInt8 = 0b11100000
+    private static let COLOR_MASK: UInt8 = 0b00010000
+    private static let FROZEN_MASK: UInt8 = 0b00001000
     
-    var rawValue: UInt8 {
-        switch self {
-        case .none: 0
-        case .pawn: 1
-        case .horse: 2
-        case .rook: 3
-        case .flanger: 4
-        case .uni: 5
-        case .king: 6
-        }
-    }
-
-    var imageName: String? {
-        switch self {
-        case .none: nil
-        case .pawn: "p"
-        case .horse: "n"
-        case .rook: "r"
-        case .flanger: "f"
-        case .uni: "q"
-        case .king: "k"
-        }
-    }
-
-    /// Piece freezes after moving.
-    var hasFreeze: Bool {
-        return self != .king
+    private static let TYPE_SHIFT = 5
+    private static let COLOR_SHIFT = 4
+    private static let FROZEN_SHIFT = 3
+    
+    private var rawValue: UInt8
+    
+    init() {
+        rawValue = .zero
     }
     
-    init(rawValue: UInt8) {
-        self = switch rawValue {
-        case 1: .pawn
-        case 2: .horse
-        case 3: .rook
-        case 4: .flanger
-        case 5: .uni
-        case 6: .king
-        default: .none
-        }
-    }
-}
-
-enum PieceColor: RawRepresentable {
-    case white
-    case black
-    
-    var rawValue: Bool {
-        switch self {
-        case .white: true
-        case .black: false
-        }
+    init(type: PieceType, color: PieceColor, frozen: Bool = false) {
+        self.init()
+        self.type = type
+        self.color = color
+        self.frozen = frozen
     }
     
-    init?(rawValue: Bool) {
-        self = if rawValue { .white } else { .black }
+    var type: PieceType {
+        get { PieceType(rawValue: (rawValue & Self.TYPE_MASK) >> Self.TYPE_SHIFT) }
+        set { reset(for: Self.TYPE_MASK); rawValue |= ((newValue.rawValue << Self.TYPE_SHIFT) & Self.TYPE_MASK) }
     }
     
-    var opponent: PieceColor { self == .white ? .black : .white }
-}
-
-struct Piece: Identifiable, Equatable {
+    var color: PieceColor {
+        get { (rawValue & Self.COLOR_MASK) != 0 ? .white : .black }
+        set { reset(for: Self.COLOR_MASK); rawValue |= ((newValue.rawValue ? 0b1 : 0b0) << Self.COLOR_SHIFT) }
+    }
     
-    let id = UUID()
-    let type: PieceType
-    let color: PieceColor
-    var frozen: Bool
-
-    // Full image name for the piece (e.g., "wp", "bk")
+    var frozen: Bool {
+        get { rawValue & Self.FROZEN_MASK != 0 }
+        set { reset(for: Self.FROZEN_MASK); rawValue |= ((newValue ? 0b1 : 0b0) << Self.FROZEN_SHIFT) }
+    }
+    
     var imageName: String? {
         guard let imageName = type.imageName else { return nil }
         let colorPrefix = color == .white ? "w" : "b"
         return "\(colorPrefix)\(imageName)"
     }
-
-    init(type: PieceType, color: PieceColor, frozen: Bool = false) {
-        self.type = type
-        self.color = color
-        self.frozen = frozen
+    
+    private mutating func reset(for bitMask: UInt8) {
+        rawValue &= ~bitMask
     }
 }

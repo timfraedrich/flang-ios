@@ -3,15 +3,14 @@ import SwiftUI
 struct SquareView: View {
     
     let position: BoardPosition
-    let piece: Piece?
+    let isFrozen: Bool
+    let hasPiece: Bool
     let isSelected: Bool
     let isLegalMove: Bool
     
     private var isLightSquare: Bool { (position.row + position.col) % 2 == 1 }
     private var squareColor: Color { if isLightSquare { .boardWhite } else { .boardBlack } }
     private var textColor: Color { if isLightSquare { .boardBlack } else { .boardWhite } }
-    private var hasPiece: Bool { piece != nil }
-    private var isFrozen: Bool { piece?.frozen == true }
     private var numberLabel: String? {
         guard position.col == .zero else { return nil }
         return String(position.row + 1)
@@ -35,15 +34,9 @@ struct SquareView: View {
                 } else if isLegalMove {
                     Circle()
                         .fill(.fieldMove)
-                        .frame(width: proxy.size.width * 0.4, height: proxy.size.height * 0.4)
+                        .frame(width: proxy.size.width * 0.2, height: proxy.size.height * 0.2)
                 } else if isFrozen {
                     Rectangle().fill(.fieldFrozen)
-                }
-                
-                if let imageName = piece?.imageName {
-                    Image(imageName)
-                        .resizable()
-                        .aspectRatio(1, contentMode: .fit)
                 }
                 
                 if let letterLabel {
