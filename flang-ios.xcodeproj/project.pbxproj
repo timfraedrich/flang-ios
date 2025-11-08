@@ -6,11 +6,27 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		2280E2F32EBFFA54005C0C8B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 22FA3D922EA0E14900F6CCB9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 22FA3D992EA0E14900F6CCB9;
+			remoteInfo = "flang-ios";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		2280E2EF2EBFFA54005C0C8B /* flang-ios-tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "flang-ios-tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		22FA3D9A2EA0E14900F6CCB9 /* flang-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "flang-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		2280E2F02EBFFA54005C0C8B /* flang-ios-tests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "flang-ios-tests";
+			sourceTree = "<group>";
+		};
 		22FA3D9C2EA0E14900F6CCB9 /* flang-ios */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "flang-ios";
@@ -19,6 +35,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2280E2EC2EBFFA54005C0C8B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		22FA3D972EA0E14900F6CCB9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -33,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				22FA3D9C2EA0E14900F6CCB9 /* flang-ios */,
+				2280E2F02EBFFA54005C0C8B /* flang-ios-tests */,
 				22FA3D9B2EA0E14900F6CCB9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				22FA3D9A2EA0E14900F6CCB9 /* flang-ios.app */,
+				2280E2EF2EBFFA54005C0C8B /* flang-ios-tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,6 +73,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2280E2EE2EBFFA54005C0C8B /* flang-ios-tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2280E2F72EBFFA54005C0C8B /* Build configuration list for PBXNativeTarget "flang-ios-tests" */;
+			buildPhases = (
+				2280E2EB2EBFFA54005C0C8B /* Sources */,
+				2280E2EC2EBFFA54005C0C8B /* Frameworks */,
+				2280E2ED2EBFFA54005C0C8B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2280E2F42EBFFA54005C0C8B /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				2280E2F02EBFFA54005C0C8B /* flang-ios-tests */,
+			);
+			name = "flang-ios-tests";
+			packageProductDependencies = (
+			);
+			productName = "flang-ios-tests";
+			productReference = 2280E2EF2EBFFA54005C0C8B /* flang-ios-tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		22FA3D992EA0E14900F6CCB9 /* flang-ios */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 22FA3DA52EA0E14A00F6CCB9 /* Build configuration list for PBXNativeTarget "flang-ios" */;
@@ -77,9 +125,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2600;
+				LastSwiftUpdateCheck = 2610;
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
+					2280E2EE2EBFFA54005C0C8B = {
+						CreatedOnToolsVersion = 26.1;
+						TestTargetID = 22FA3D992EA0E14900F6CCB9;
+					};
 					22FA3D992EA0E14900F6CCB9 = {
 						CreatedOnToolsVersion = 26.0;
 					};
@@ -100,11 +152,19 @@
 			projectRoot = "";
 			targets = (
 				22FA3D992EA0E14900F6CCB9 /* flang-ios */,
+				2280E2EE2EBFFA54005C0C8B /* flang-ios-tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2280E2ED2EBFFA54005C0C8B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		22FA3D982EA0E14900F6CCB9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -115,6 +175,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2280E2EB2EBFFA54005C0C8B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		22FA3D962EA0E14900F6CCB9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,7 +191,67 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		2280E2F42EBFFA54005C0C8B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 22FA3D992EA0E14900F6CCB9 /* flang-ios */;
+			targetProxy = 2280E2F32EBFFA54005C0C8B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		2280E2F52EBFFA54005C0C8B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QT27QDFZ7N;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.tadris.flang-ios-tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/flang-ios.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/flang-ios";
+				XROS_DEPLOYMENT_TARGET = 26.1;
+			};
+			name = Debug;
+		};
+		2280E2F62EBFFA54005C0C8B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QT27QDFZ7N;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.tadris.flang-ios-tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/flang-ios.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/flang-ios";
+				XROS_DEPLOYMENT_TARGET = 26.1;
+			};
+			name = Release;
+		};
 		22FA3DA32EA0E14A00F6CCB9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -321,6 +448,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2280E2F72EBFFA54005C0C8B /* Build configuration list for PBXNativeTarget "flang-ios-tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2280E2F52EBFFA54005C0C8B /* Debug */,
+				2280E2F62EBFFA54005C0C8B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		22FA3D952EA0E14900F6CCB9 /* Build configuration list for PBXProject "flang-ios" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

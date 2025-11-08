@@ -59,6 +59,60 @@ struct Board: Equatable {
         return board
     }
 
+    /// Initialize board from FBN (Flang Board Notation) piece string
+    /// - Parameter fbnPieces: FBN string WITHOUT the leading color character (+/-)
+    /// - Note: This is a helper for Game to use. Game handles the color prefix.
+    init?(fromFBNPieces fbnPieces: String) {
+        self.init()
+
+        var currentIndex = 0
+        var lastPieceIndex: Int?
+        var numberBuffer = ""
+
+        for char in fbnPieces {
+            if currentIndex >= Self.arraySize && !char.isNumber {
+                return nil // Too many pieces
+            }
+
+            if char.isNumber {
+                // Accumulate digits for multi-digit numbers
+                numberBuffer.append(char)
+            } else {
+                // Flush any accumulated number
+                if !numberBuffer.isEmpty {
+                    guard let skipCount = Int(numberBuffer) else { return nil }
+                    currentIndex += skipCount
+                    numberBuffer = ""
+                }
+
+                if currentIndex >= Self.arraySize {
+                    return nil // Too many pieces
+                }
+
+                if char == "-" {
+                    // Minus: freeze the last placed piece
+                    guard let index = lastPieceIndex else { return nil }
+                    pieces[index].frozen = true
+                } else if char.isLetter {
+                    // Letter: place piece at current location
+                    guard let (type, color) = PieceType.from(character: char) else { return nil }
+                    guard type != .none else { return nil } // Empty squares should use numbers
+                    pieces[currentIndex] = Piece(type: type, color: color, frozen: false)
+                    lastPieceIndex = currentIndex
+                    currentIndex += 1
+                } else {
+                    return nil // Invalid character
+                }
+            }
+        }
+
+        // Flush any remaining number at the end
+        if !numberBuffer.isEmpty {
+            guard let skipCount = Int(numberBuffer) else { return nil }
+            currentIndex += skipCount
+        }
+    }
+
     // MARK: - Coordinate Helpers
 
     static func x(of index: Index) -> Int { index % boardSize }

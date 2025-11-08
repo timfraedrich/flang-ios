@@ -56,21 +56,6 @@ struct GameView: View {
         }
         
     }
-    
-    struct Action: Equatable, Hashable {
-        let name: String
-        let symbolName: String
-        let action: () -> Void
-        
-        func hash(into hasher: inout Hasher) {
-            hasher.combine(name)
-            hasher.combine(symbolName)
-        }
-        
-        static func == (rhs: Self, lhs: Self) -> Bool {
-            return rhs.name == lhs.name && rhs.symbolName == lhs.symbolName
-        }
-    }
 }
 
 #Preview {
