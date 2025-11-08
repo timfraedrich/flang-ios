@@ -4,7 +4,7 @@ import SwiftUI
 struct FlangApp: App {
     var body: some Scene {
         WindowGroup {
-            GameView()
+            MainMenuView()
         }
     }
 }

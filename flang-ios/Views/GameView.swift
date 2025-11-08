@@ -2,15 +2,24 @@ import SwiftUI
 
 struct GameView: View {
     
+    @Environment(\.dismiss) private var dismissAction
     @State private var gameState = GameState()
     @State private var rotateBoard = false
+    @State private var showShareSheet = false
+    @State private var showAbortConfimation = false
+    private let rotateBlackPieces: Bool
+    
+    init(gameState: GameState = .init(), rotateBlackPieces: Bool = true) {
+        self.gameState = gameState
+        self.rotateBlackPieces = rotateBlackPieces
+    }
     
     var body: some View {
         GeometryReader { proxy in
             VStack {
                 infoAndControls(isFirstPlayerPerspective: false).rotationEffect(.degrees(180))
                 ZStack {
-                    BoardView(gameState: gameState, rotateBlackPieces: true)
+                    BoardView(gameState: gameState, rotateBlackPieces: rotateBlackPieces)
                         .frame(width: proxy.size.width, height: proxy.size.width)
                         .rotationEffect(.degrees(rotateBoard ? 180 : 0))
                         .disabled(gameState.winner != nil)
@@ -25,6 +34,23 @@ struct GameView: View {
             }
         }
         .padding(.horizontal)
+        .navigationBarBackButtonHidden()
+        .alert("Share", isPresented: $showShareSheet) {
+            Button("Share Game") {
+                UIPasteboard.general.string = try? gameState.game.toFMN()
+            }
+            Button("Share Board") {
+                UIPasteboard.general.string = gameState.game.toFBN()
+            }
+            Text("Cancel")
+        } message: {
+            Text("The game or board will be copied to your clipboard in text form.")
+        }
+        .alert("Abort", isPresented: $showAbortConfimation) {
+            Button("Abort", role: .destructive, action: dismissAction.callAsFunction)
+        } message: {
+            Text("Do you want to abort the game? All progress will be lost unless the game was backed up somewhere.")
+        }
     }
     
     @ViewBuilder
@@ -47,8 +73,14 @@ struct GameView: View {
                 isFirstPlayerPerspective: isFirstPlayerPerspective,
                 backEnabled: gameState.game.backEnabled,
                 forwardEnabled: gameState.game.forwardEnabled,
-                closeAction: { try? gameState.reset() },
-                shareAction: {},
+                closeAction: {
+                    if gameState.game.hasHistory {
+                        showAbortConfimation = true
+                    } else {
+                        dismissAction()
+                    }
+                },
+                shareAction: { showShareSheet = true },
                 rotateBoardAction: { rotateBoard.toggle() },
                 backwardAction: { try? gameState.back() },
                 forwardAction: { try? gameState.forward() }
