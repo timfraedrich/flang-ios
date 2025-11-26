@@ -1,0 +1,238 @@
+import FlangOnline
+import FlangOnlineUI
+import SwiftUI
+
+struct CommunityScene: View {
+
+    @Environment(CommunityService.self) private var communityService
+    @State private var topPlayers: [UserInfo] = []
+    @State private var onlinePlayers: [UserInfo] = []
+    @State private var searchResults: [UserInfo] = []
+    @State private var searchText = ""
+    @State private var isLoadingTop = false
+    @State private var isLoadingOnline = false
+    @State private var isSearching = false
+    @State private var error: String?
+    @State private var selectedTab: Tab = .top
+    
+    init() {}
+
+    var body: some View {
+        VStack(spacing: 0) {
+            Picker("View", selection: $selectedTab) {
+                Text("Top Players").tag(Tab.top)
+                Text("Online").tag(Tab.online)
+                Text("Search").tag(Tab.search)
+            }
+            .pickerStyle(.segmented)
+            .padding()
+            TabView(selection: $selectedTab) {
+                if selectedTab == .top {
+                    topPlayersView
+                } else if selectedTab == .online {
+                    onlinePlayersView
+                } else {
+                    searchView
+                }
+            }
+            .tabViewStyle(.page)
+        }
+        .navigationTitle("Community")
+        .navigationBarTitleDisplayMode(.inline)
+        .task(loadData)
+        .refreshable(action: loadData)
+    }
+
+    // MARK: - Top Players View
+
+    private var topPlayersView: some View {
+        Group {
+            if isLoadingTop && topPlayers.isEmpty {
+                loadingView
+            } else if let error, topPlayers.isEmpty {
+                errorView(message: error)
+            } else if topPlayers.isEmpty {
+                emptyView(message: "No top players found")
+            } else {
+                userList(for: topPlayers, showRank: true)
+            }
+        }
+    }
+
+    // MARK: - Online Players View
+
+    private var onlinePlayersView: some View {
+        Group {
+            if isLoadingOnline && onlinePlayers.isEmpty {
+                loadingView
+            } else if let error, onlinePlayers.isEmpty {
+                errorView(message: error)
+            } else if onlinePlayers.isEmpty {
+                emptyView(message: "No players online")
+            } else {
+                userList(for: onlinePlayers)
+            }
+        }
+    }
+
+    // MARK: - Search View
+
+    private var searchView: some View {
+        Group {
+            if isSearching {
+                loadingView
+            } else if searchText.isEmpty {
+                VStack(spacing: 16) {
+                    Image(systemName: "magnifyingglass")
+                        .font(.system(size: 50))
+                        .foregroundStyle(.secondary)
+                    Text("Search for players")
+                        .font(.headline)
+                        .foregroundStyle(.secondary)
+                    Text("Enter a username to find players")
+                        .font(.subheadline)
+                        .foregroundStyle(.tertiary)
+                        .multilineTextAlignment(.center)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else if searchResults.isEmpty && !isSearching {
+                emptyView(message: "No users found matching '\(searchText)'")
+            } else {
+               userList(for: searchResults)
+            }
+        }
+        .searchable(text: $searchText)
+        .onChange(of: searchText) { oldValue, newValue in
+            let old = oldValue.trimmingCharacters(in: .whitespacesAndNewlines)
+            let new = newValue.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard old != new else { return }
+            performSearch()
+        }
+    }
+
+    // MARK: - Helper Views
+    
+    @ViewBuilder
+    private func userList(for userInfos: [UserInfo], showRank: Bool = false) -> some View {
+        List {
+            ForEach(Array(userInfos.enumerated()), id: \.element.username) { index, userInfo in
+                NavigationLink(value: NavigationDestination.playerProfile(username: userInfo.username)) {
+                    UserRow(user: userInfo, rank: showRank ? index + 1 : nil)
+                }
+            }
+        }
+        .listStyle(.plain)
+    }
+
+    private var loadingView: some View {
+        VStack(spacing: 16) {
+            ProgressView()
+            Text("Loading...")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private func errorView(message: String) -> some View {
+        VStack(spacing: 16) {
+            Image(systemName: "exclamationmark.triangle")
+                .font(.system(size: 50))
+                .foregroundStyle(.red)
+            Text("Error")
+                .font(.headline)
+            Text(message)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+            Button("Retry") {
+                Task {
+                    await loadData()
+                }
+            }
+            .buttonStyle(.borderedProminent)
+        }
+        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private func emptyView(message: String) -> some View {
+        VStack(spacing: 16) {
+            Image(systemName: "person.2.slash")
+                .font(.system(size: 50))
+                .foregroundStyle(.secondary)
+            Text(message)
+                .font(.headline)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+        }
+        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    // MARK: - Data Loading
+
+    private func loadData() async {
+        await loadTopPlayers()
+        await loadOnlinePlayers()
+    }
+
+    private func loadTopPlayers() async {
+        isLoadingTop = true
+        error = nil
+
+        do {
+            topPlayers = try await communityService.getTopPlayers()
+        } catch {
+            self.error = error.localizedDescription
+        }
+
+        isLoadingTop = false
+    }
+
+    private func loadOnlinePlayers() async {
+        isLoadingOnline = true
+        error = nil
+
+        do {
+            onlinePlayers = try await communityService.getOnlinePlayers()
+        } catch {
+            self.error = error.localizedDescription
+        }
+
+        isLoadingOnline = false
+    }
+
+    private func performSearch() {
+        guard !searchText.trimmingCharacters(in: .whitespaces).isEmpty else {
+            searchResults = []
+            return
+        }
+
+        Task {
+            isSearching = true
+            error = nil
+
+            do {
+                searchResults = try await communityService.searchUsers(username: searchText)
+            } catch {
+                self.error = error.localizedDescription
+                searchResults = []
+            }
+
+            isSearching = false
+        }
+    }
+    
+    enum Tab {
+        case top
+        case online
+        case search
+    }
+}
+
+#Preview {
+    NavigationStack {
+        CommunityScene()
+    }
+}
