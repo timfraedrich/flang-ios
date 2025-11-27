@@ -47,12 +47,13 @@ public class SessionManager {
         let loginParams = LoginParameters(username: username, key: newSessionResponse.key)
         try await apiClient.sendRequest(to: .login, parameters: loginParams)
         try saveSession(username: username, sessionKey: loginParams.key)
-        self.status = .loggedIn(username: username, sessionKey: password)
+        status = .loggedIn(username: username, sessionKey: password)
     }
     
     /// Logout and clear session
     public func logout() throws {
         try clearSession()
+        status = .loggedOut
     }
     
     /// Change password
