@@ -13,12 +13,47 @@ struct CommunityScene: View {
     @State private var isLoadingOnline = false
     @State private var isSearching = false
     @State private var error: String?
-    @State private var selectedTab: Tab = .top
+    @State private var selectedTab: Tab? = .top
+    @State private var showingSearch: Bool = false
     
     init() {}
 
     var body: some View {
-        VStack(spacing: 0) {
+        GeometryReader { proxy in
+            ScrollView(.horizontal) {
+                LazyHStack(spacing: .zero) {
+                    ForEach(Tab.allCases, id: \.hashValue) { tab in
+                        switch tab {
+                        case .top: topPlayersView
+                        case .online: onlinePlayersView
+                        case .search: searchView
+                        }
+                    }
+                    .frame(width: proxy.size.width)
+                }
+                .scrollTargetLayout()
+            }
+            .scrollTargetBehavior(.paging)
+            .scrollPosition(id: $selectedTab)
+        }
+        .searchable(text: $searchText, isPresented: $showingSearch)
+        .onChange(of: showingSearch) { oldValue, newValue in
+            guard oldValue == false, newValue == true else { return }
+            selectedTab = .search
+        }
+        .onChange(of: searchText) { oldValue, newValue in
+            let old = oldValue.trimmingCharacters(in: .whitespacesAndNewlines)
+            let new = newValue.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard old != new else { return }
+            selectedTab = .search
+            performSearch()
+        }
+        .scrollIndicators(.hidden, axes: .horizontal)
+        .navigationTitle("Community")
+        .navigationBarTitleDisplayMode(.inline)
+        .task(loadData)
+        .refreshable(action: loadData)
+        .safeAreaInset(edge: .top) {
             Picker("View", selection: $selectedTab) {
                 Text("Top Players").tag(Tab.top)
                 Text("Online").tag(Tab.online)
@@ -26,21 +61,7 @@ struct CommunityScene: View {
             }
             .pickerStyle(.segmented)
             .padding()
-            TabView(selection: $selectedTab) {
-                if selectedTab == .top {
-                    topPlayersView
-                } else if selectedTab == .online {
-                    onlinePlayersView
-                } else {
-                    searchView
-                }
-            }
-            .tabViewStyle(.page)
         }
-        .navigationTitle("Community")
-        .navigationBarTitleDisplayMode(.inline)
-        .task(loadData)
-        .refreshable(action: loadData)
     }
 
     // MARK: - Top Players View
@@ -57,6 +78,7 @@ struct CommunityScene: View {
                 userList(for: topPlayers, showRank: true)
             }
         }
+        .id(Tab.top)
     }
 
     // MARK: - Online Players View
@@ -73,6 +95,7 @@ struct CommunityScene: View {
                 userList(for: onlinePlayers)
             }
         }
+        .id(Tab.online)
     }
 
     // MARK: - Search View
@@ -101,13 +124,7 @@ struct CommunityScene: View {
                userList(for: searchResults)
             }
         }
-        .searchable(text: $searchText)
-        .onChange(of: searchText) { oldValue, newValue in
-            let old = oldValue.trimmingCharacters(in: .whitespacesAndNewlines)
-            let new = newValue.trimmingCharacters(in: .whitespacesAndNewlines)
-            guard old != new else { return }
-            performSearch()
-        }
+        .id(Tab.search)
     }
 
     // MARK: - Helper Views
@@ -193,13 +210,11 @@ struct CommunityScene: View {
     private func loadOnlinePlayers() async {
         isLoadingOnline = true
         error = nil
-
         do {
             onlinePlayers = try await communityService.getOnlinePlayers()
         } catch {
             self.error = error.localizedDescription
         }
-
         isLoadingOnline = false
     }
 
@@ -208,31 +223,22 @@ struct CommunityScene: View {
             searchResults = []
             return
         }
-
         Task {
             isSearching = true
             error = nil
-
             do {
                 searchResults = try await communityService.searchUsers(username: searchText)
             } catch {
                 self.error = error.localizedDescription
                 searchResults = []
             }
-
             isSearching = false
         }
     }
     
-    enum Tab {
+    enum Tab: Hashable, CaseIterable {
         case top
         case online
         case search
-    }
-}
-
-#Preview {
-    NavigationStack {
-        CommunityScene()
     }
 }
