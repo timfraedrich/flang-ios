@@ -88,23 +88,28 @@ struct PlayerProfileScene: View {
                 .tint(.red)
             }
         }
-        .navigationTitle("Profile")
+        .navigationTitle("\(username) Profile")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
+            ToolbarItem(placement: .title) {
+                Color.clear
+            }
             if sessionManager.username == username {
-                Button("Log out", role: .destructive) {
-                    confirmLogOut = true
-                }.confirmationDialog("Log out", isPresented: $confirmLogOut) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button("Log out", role: .destructive) {
-                        do {
-                            try sessionManager.logout()
-                            dismiss()
-                        } catch {}
+                        confirmLogOut = true
+                    }.confirmationDialog("Log out", isPresented: $confirmLogOut) {
+                        Button("Log out", role: .destructive) {
+                            do {
+                                try sessionManager.logout()
+                                dismiss()
+                            } catch {}
+                        }
+                    } message: {
+                        Text("Are you sure you want to log out of your account?")
                     }
-                } message: {
-                    Text("Are you sure you want to log out of your account?")
+                    .tint(.red)
                 }
-                .tint(.red)
             }
         }
         .task(loadProfile)

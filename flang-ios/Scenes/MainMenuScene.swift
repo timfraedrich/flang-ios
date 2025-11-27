@@ -74,6 +74,13 @@ struct MainMenuScene: View {
         } message: {
             Text(loadErrorMessage)
         }
+        .navigationTitle("Main Menu")
+        .toolbarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .title) {
+                Color.clear
+            }
+        }
     }
     
     @ViewBuilder
