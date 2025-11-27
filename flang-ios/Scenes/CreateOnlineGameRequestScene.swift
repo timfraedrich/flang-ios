@@ -45,7 +45,7 @@ struct CreateOnlineGameRequestScene: View {
                 }
                 await MainActor.run {
                     isCreating = false
-                    dismiss()
+                    router.path.removeLast()
                     if let gameId {
                         router.path.append(NavigationDestination.onlineGame(id: gameId))
                     }
@@ -69,7 +69,6 @@ struct CreateOnlineGameRequestScene: View {
         .navigationBarTitleDisplayMode(.inline)
         .safeAreaInset(edge: .bottom, content: bottomSafeAreaInset)
         .ignoresSafeArea(.container, edges: .bottom)
-        .toolbar(content: toolbarContent)
         .disabled(isCreating)
     }
     
@@ -135,7 +134,7 @@ struct CreateOnlineGameRequestScene: View {
                 if isCreating {
                     ProgressView().progressViewStyle(.circular).controlSize(.regular)
                 } else {
-                    Text("Create")
+                    Text("Create").bold()
                 }
             }
             .frame(maxWidth: .infinity)
@@ -144,14 +143,5 @@ struct CreateOnlineGameRequestScene: View {
         .controlSize(.large)
         .padding(.init(top: 48, leading: 24, bottom: 32, trailing: 24))
         .background { BackgroundBlackoutGradient(startPoint: .top, endPoint: .center) }
-    }
-    
-    @ToolbarContentBuilder
-    private func toolbarContent() -> some ToolbarContent {
-        ToolbarItem(placement: .cancellationAction) {
-            Button(action: dismiss.callAsFunction) {
-                Label("Close", systemImage: "xmark").labelStyle(.iconOnly)
-            }
-        }
     }
 }
