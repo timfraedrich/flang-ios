@@ -16,6 +16,15 @@ struct OnlineGameScene: View {
     @State private var showResignConfirmation = false
     @State private var errorMessage: String?
     
+    private var showError: Binding<Bool> {
+        .init {
+            errorMessage != nil
+        } set: { showError in
+            guard !showError else { return }
+            errorMessage = nil
+        }
+    }
+    
     private let gameId: Int
 
     init(gameId: Int) {
@@ -44,8 +53,11 @@ struct OnlineGameScene: View {
                 errorMessage = error.localizedDescription
             }
         }
-        .onDisappear {
-            onlineGameState?.stop()
+        .alert("Error", isPresented: showError) {
+            Button("Dismiss") {}
+        } message: {
+            Text(errorMessage ?? "Unknown error")
+        }
         }
     }
     

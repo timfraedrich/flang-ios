@@ -1,3 +1,4 @@
+import Combine
 import FlangModel
 import FlangOnline
 import FlangUI
@@ -13,7 +14,7 @@ public class OnlineGameState {
     private let gameId: Int
     private let sessionManager: SessionManager
     private let onlineGameService: OnlineGameService
-    private var pollingTask: Task<Void, Never>?
+    private var pollingTaskCancellable: AnyCancellable?
     private let pollingTimeout: Int = 30000
     
     public private(set) var gameInfo: OnlineGameInfo?
@@ -65,8 +66,7 @@ public class OnlineGameState {
     /// Stop syncing the game
     public func stop() {
         isActive = false
-        pollingTask?.cancel()
-        pollingTask = nil
+        pollingTaskCancellable?.cancel()
     }
     
     /// Handle position selection, sending moves to server when made
@@ -117,7 +117,7 @@ public class OnlineGameState {
     }
 
     private func startPolling() {
-        pollingTask = Task {
+        pollingTaskCancellable = Task {
             while isActive && !Task.isCancelled {
                 do {
                     // Use current move count for long polling
@@ -142,7 +142,7 @@ public class OnlineGameState {
                     try? await Task.sleep(for: .seconds(5))
                 }
             }
-        }
+        }.eraseToAnyCancellable()
     }
 
     // MARK: - Error
