@@ -58,7 +58,11 @@ struct OnlineGameScene: View {
         } message: {
             Text(errorMessage ?? "Unknown error")
         }
+        .onChange(of: onlineGameState?.playerColor) { oldValue, newValue in
+            guard oldValue == nil, let newValue else { return }
+            perspective = newValue == .white ? .singlePlayerWhite : .singlePlayerBlack
         }
+        .navigationTitle("Online Game #\(gameId.formatted())")
     }
     
     @ViewBuilder
