@@ -212,7 +212,7 @@ struct NotationTests {
 
         // Play several moves
         for _ in 0..<10 {
-            let legalActions = game.legalActions()
+            let legalActions = game.legalMoveActions()
             if let action = legalActions.first {
                 try game.perform(action)
             }
