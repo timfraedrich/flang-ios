@@ -53,7 +53,6 @@ public struct OnlineGameView: View {
                     .onTapGesture { onPlayerSelection?(bottomPlayer) }
                     Spacer()
                 }
-                .backgroundStyle(.background.secondary)
                 .containerShape(.rect(cornerRadius: 20))
                 .padding(.top, max(proxy.safeAreaInsets.top, 20))
                 .padding(.bottom, max(proxy.safeAreaInsets.bottom, 20))
