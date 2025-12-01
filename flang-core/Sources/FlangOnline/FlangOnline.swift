@@ -16,7 +16,7 @@ public class FlangOnline {
         guard let baseURL = URL(string: Self.defaultAPIURL) else { throw Error.invalidBaseURL }
         let apiClient = APIClient(baseURL: baseURL)
         self.sessionManager = SessionManager(apiClient: apiClient)
-        self.onlineGameService = OnlineGameService(apiClient: apiClient)
+        self.onlineGameService = OnlineGameService(apiClient: apiClient, sessionManager: sessionManager)
         self.communityService = CommunityService(apiClient: apiClient)
     }
     

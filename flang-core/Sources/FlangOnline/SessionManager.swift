@@ -11,6 +11,7 @@ public class SessionManager {
     private let cryptoStore = CryptoStore()
     private let apiClient: APIClient
     
+    public var lastAuthentication: Date?
     public private(set) var status: Status
     public var username: String? { status.username }
     public var isLoggedIn: Bool { if case .loggedIn = status { true } else { false } }
@@ -33,6 +34,7 @@ public class SessionManager {
     // MARK: - Authentication
     
     /// Register a new user
+    /// - note: This function does not log the user in.
     public func register(username: String, password: String) async throws {
         let pwdHash = Self.hashPassword(password)
         let params = RegistrationParameters(username: username, pwdHash: pwdHash)
@@ -43,17 +45,15 @@ public class SessionManager {
     public func login(username: String, password: String) async throws {
         let newSessionParams = NewSessionParameters(username: username, pwdHash: Self.hashPassword(password))
         let newSessionResponse: SessionResponse = try await apiClient.sendRequest(to: .newSession, parameters: newSessionParams)
-        // Now login with the session key (this sets the cookie)
-        let loginParams = LoginParameters(username: username, key: newSessionResponse.key)
-        try await apiClient.sendRequest(to: .login, parameters: loginParams)
-        try saveSession(username: username, sessionKey: loginParams.key)
-        status = .loggedIn(username: username, sessionKey: password)
+        // login with the session key to set the cookie
+        try await login(username: username, key: newSessionResponse.key)
     }
     
     /// Logout and clear session
     public func logout() throws {
         try clearSession()
         status = .loggedOut
+        lastAuthentication = nil
     }
     
     /// Change password
@@ -66,6 +66,23 @@ public class SessionManager {
         // After password change, all other sessions are deleted
         // We need to create a new session
         try await login(username: username, password: newPassword)
+    }
+    
+    /// Checks if the current session is still valid and extends it if not.
+    public func checkSessionValidity() async throws {
+        guard case .loggedIn(let username, let sessionKey) = status else { throw Error.notLoggedIn }
+        guard let lastAuthentication, lastAuthentication.distance(to: .now) > 15 * 60 else { return }
+        try await login(username: username, key: sessionKey)
+    }
+    
+    /// Login and sets cookie, valid for 30 minutes
+    private func login(username: String, key: String) async throws {
+        let now = Date.now
+        let loginParams = LoginParameters(username: username, key: key)
+        try await apiClient.sendRequest(to: .login, parameters: loginParams)
+        try saveSession(username: username, sessionKey: key)
+        status = .loggedIn(username: username, sessionKey: key)
+        lastAuthentication = now
     }
     
     // MARK: - Session Persistence
