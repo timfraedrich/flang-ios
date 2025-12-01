@@ -1,4 +1,6 @@
-public enum LiveGamePreset: Hashable, CaseIterable, CustomStringConvertible {
+import SwiftUI
+
+public enum LiveGamePreset: Hashable, CaseIterable {
     case bulletOneZero
     case bulletTwoOne
     case blitzThree
@@ -6,15 +8,14 @@ public enum LiveGamePreset: Hashable, CaseIterable, CustomStringConvertible {
     case rapid
     case classical
     
-    // TODO: Localize
-    public var description: String {
+    public var localized: String {
         switch self {
-        case .bulletOneZero: "Bullet (1 min)"
-        case .bulletTwoOne: "Bullet (2+1)"
-        case .blitzThree: "Blitz (3 min)"
-        case .blitzFive: "Blitz (5 min)"
-        case .rapid: "Rapid (10 min)"
-        case .classical: "Classical (30 min)"
+        case .bulletOneZero: .init(localized: "bullet_1m", bundle: .module)
+        case .bulletTwoOne: .init(localized: "bullet_2m_1s", bundle: .module)
+        case .blitzThree: .init(localized: "blitz_3m", bundle: .module)
+        case .blitzFive: .init(localized: "blitz_5m", bundle: .module)
+        case .rapid: .init(localized: "rapid_10m", bundle: .module)
+        case .classical: .init(localized: "classical_30m", bundle: .module)
         }
     }
     

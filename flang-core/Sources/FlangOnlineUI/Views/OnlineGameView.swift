@@ -77,9 +77,9 @@ public struct OnlineGameView: View {
             )
             Group {
                 if let winner = onlineGameState.winner {
-                    Text("\(winner == .black ? "Black" : "White") won!")
+                    Text("game_end_win_\(winner.localized)", bundle: .module)
                 } else if !onlineGameInfo.running && onlineGameState.winner == nil && !onlineGameState.forwardEnabled {
-                    Text("Game Over - Draw")
+                    Text("game_end_prompt_draw", bundle: .module)
                 }
             }
             .font(.largeTitle.bold())

@@ -73,22 +73,22 @@ struct AuthenticationScene: View {
             Image(systemName: "person.circle.fill")
                 .font(.system(size: 60))
                 .foregroundStyle(.blue)
-            Text(isLogin ? "Login" : "Create Account")
+            Text(isLogin ? "login" : "create_account")
                 .font(.title.bold())
         }
     }
     
     @ViewBuilder private var inputs: some View {
         VStack(spacing: 16) {
-            inputField("Username") {
-                TextField("Enter username", text: $username).textContentType(.username)
+            inputField("input_username") {
+                TextField("input_enter_username", text: $username).textContentType(.username)
             }
-            inputField("Password") {
-                SecureField("Enter password", text: $password).textContentType(.password)
+            inputField("input_password") {
+                SecureField("input_enter_password", text: $password).textContentType(.password)
             }
             if !isLogin {
-                inputField("Username") {
-                    SecureField("Confirm password", text: $confirmPassword).textContentType(.password)
+                inputField("input_confirm_password") {
+                    SecureField("input_enter_password", text: $confirmPassword).textContentType(.password)
                 }
             }
         }
@@ -127,7 +127,7 @@ struct AuthenticationScene: View {
                     if isLoading {
                         ProgressView().progressViewStyle(.circular).controlSize(.regular)
                     } else {
-                        Text(isLogin ? "Login" : "Register").font(.headline)
+                        Text(isLogin ? "login" : "register").font(.headline)
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -137,7 +137,7 @@ struct AuthenticationScene: View {
             .disabled(!isFormValid || isLoading)
             
             Button(action: { isLogin.toggle() }) {
-                Text(isLogin ? "Don't have an account? Register" : "Already have an account? Login")
+                Text(isLogin ? "register_prompt" : "login_prompt")
                     .font(.subheadline)
             }
         }
@@ -148,7 +148,7 @@ struct AuthenticationScene: View {
     @ToolbarContentBuilder
     private func toolbarContent() -> some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
-            Button("Cancel", action: dismiss.callAsFunction)
+            Button(role: .cancel, action: dismiss.callAsFunction)
         }
     }
 
@@ -159,9 +159,9 @@ struct AuthenticationScene: View {
         var errorDescription: String? {
             switch self {
             case .invalidUsername:
-                return "Username must be 5-15 alphanumeric characters, underscores, or hyphens"
+                return String(localized: "invalid_username_error")
             case .passwordMismatch:
-                return "Passwords do not match"
+                return String(localized: "password_mismatch_error")
             }
         }
     }

@@ -7,6 +7,7 @@ struct FlangApp: App {
 
     @State private var flangOnline = try? FlangOnline()
     @State private var router = Router()
+    @Environment(\.openURL) var openURL
 
     var body: some Scene {
         WindowGroup {
@@ -38,7 +39,7 @@ struct FlangApp: App {
                 .environment(flangOnline.onlineGameService)
                 .environment(router)
             } else {
-                Text("Error: Could not initialize FlangOnline")
+                Text("flang_online_init_error")
             }
         }
     }

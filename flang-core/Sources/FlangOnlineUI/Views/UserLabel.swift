@@ -35,7 +35,7 @@ public struct UserLabel: View {
                 badge(title).foregroundStyle(.green)
             }
             if isBot {
-                badge("BOT").foregroundStyle(.blue)
+                badge(String(localized: "user_badge_bot", bundle: .module)).foregroundStyle(.blue)
             }
         }
     }

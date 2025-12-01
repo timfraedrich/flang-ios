@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 public enum PieceColor: RawRepresentable, Hashable, Sendable {
     case white
@@ -16,4 +17,11 @@ public enum PieceColor: RawRepresentable, Hashable, Sendable {
     }
     
     public var opponent: PieceColor { self == .white ? .black : .white }
+    
+    public var localized: String {
+        switch self {
+        case .white: .init(localized: "piece_color_white", bundle: .module)
+        case .black: .init(localized: "piece_color_black", bundle: .module)
+        }
+    }
 }

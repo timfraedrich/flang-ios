@@ -58,7 +58,7 @@ struct PlayerProfileScene: View {
                     ProgressView()
                         .progressViewStyle(.circular)
                         .controlSize(.large)
-                    Text("Loading profile...")
+                    Text("loading_profile")
                         .font(.headline)
                         .foregroundStyle(.secondary)
                 }
@@ -69,14 +69,14 @@ struct PlayerProfileScene: View {
                         .font(.system(size: 50))
                         .foregroundStyle(.tint)
                     VStack {
-                        Text("Error loading profile")
+                        Text("error_loading_profile")
                             .font(.headline)
                         Text(errorMessage)
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
                     .multilineTextAlignment(.center)
-                    Button("Retry") {
+                    Button("retry") {
                         Task {
                             await loadProfile()
                         }
@@ -88,7 +88,7 @@ struct PlayerProfileScene: View {
                 .tint(.red)
             }
         }
-        .navigationTitle("\(username) Profile")
+        .navigationTitle(String(localized: "player_profile_title_\(username)"))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .title) {
@@ -96,17 +96,17 @@ struct PlayerProfileScene: View {
             }
             if sessionManager.username == username {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Log out", role: .destructive) {
+                    Button("logout", role: .destructive) {
                         confirmLogOut = true
-                    }.confirmationDialog("Log out", isPresented: $confirmLogOut) {
-                        Button("Log out", role: .destructive) {
+                    }.confirmationDialog("logout", isPresented: $confirmLogOut) {
+                        Button("logout", role: .destructive) {
                             do {
                                 try sessionManager.logout()
                                 dismiss()
                             } catch {}
                         }
                     } message: {
-                        Text("Are you sure you want to log out of your account?")
+                        Text("confirm_logout_message")
                     }
                     .tint(.red)
                 }
@@ -131,8 +131,8 @@ struct PlayerProfileScene: View {
                         UserLabel(username: playerProfile.username, title: playerProfile.title, isBot: playerProfile.isBot).font(.title)
                     }
                     Group {
-                        Text("Member since \(playerProfile.registrationDate.formatted(date: .long, time: .omitted))")
-                        Text("Games: \(playerProfile.completedGames.description)")
+                        Text("member_since_\(playerProfile.registrationDate.formatted(date: .long, time: .omitted))")
+                        Text("games_count_\(playerProfile.completedGames.description)")
                     }
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -149,7 +149,7 @@ struct PlayerProfileScene: View {
             HStack(spacing: 12) {
                 Group {
                     ForEach(playerProfile.ratings, id: \.type.hashValue) { rating in
-                        LabeledContent(rating.type.description) {
+                        LabeledContent(rating.type.localized) {
                             RatingLabel(rating: rating.value)
                         }
                     }
@@ -165,12 +165,12 @@ struct PlayerProfileScene: View {
     @ViewBuilder
     private func ratingHistorySection(for playerProfile: PlayerProfile) -> some View {
         if !playerProfile.history.isEmpty {
-            Section("Rating History") {
+            Section("rating_history") {
                 Chart {
                     ForEach(playerProfile.history, id: \.date) { entry in
-                        let x: PlottableValue = .value("Date", entry.date)
-                        let y: PlottableValue = .value("Rating", abs(entry.rating))
-                        let series: PlottableValue = .value(entry.type.description, entry.type.description)
+                        let x: PlottableValue = .value(String(localized: "title_date"), entry.date)
+                        let y: PlottableValue = .value(String(localized: "rating"), abs(entry.rating))
+                        let series: PlottableValue = .value(entry.type.localized, entry.type.rawValue)
                         LineMark(x: x, y: y, series: series)
                             .foregroundStyle(by: series)
                             .interpolationMethod(.linear)
@@ -197,10 +197,10 @@ struct PlayerProfileScene: View {
                 }
             } header: {
                 HStack {
-                    Text("Game History")
+                    Text("game_history")
                     Spacer()
                     if !showAllGames {
-                        Button("Show All") {
+                        Button("show_all") {
                             showAllGames = true
                             Task { await loadHistory() }
                         }

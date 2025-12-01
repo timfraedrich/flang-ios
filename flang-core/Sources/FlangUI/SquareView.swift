@@ -48,7 +48,11 @@ public struct SquareView: View {
                         .frame(width: proxy.size.width * 0.2, height: proxy.size.height * 0.2)
                 } else if isFrozen {
                     if differentiateWithoutColor {
-                        Image(systemName: "snowflake").foregroundStyle(Color.fieldFrozen)
+                        Image(systemName: "snowflake")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundStyle(Color.white)
+                            .padding(proxy.size.width * 0.1)
                     }
                     Rectangle().fill(Color.fieldFrozen)
                 }

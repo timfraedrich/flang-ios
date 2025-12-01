@@ -59,19 +59,23 @@ public struct GameRequestRow: View {
                             Text(formattedDuration)
                         }
                     } else {
-                        Text("Daily (\(formattedDuration))")
+                        Text("daily_game_duration_\(formattedDuration)", bundle: .module)
                     }
                 }
                 .font(.caption)
-                Text(gameConfiguration.isRated ? "Rated" : "Casual")
+                Text(gameConfiguration.isRated ? "game_config_rated" : "game_config_casual", bundle: .module)
                     .font(.caption2)
                     .foregroundStyle(gameConfiguration.isRated ? .orange : .secondary)
             }
             Group {
                 if userIsRequester {
-                    Button("Cancel", action: action).tint(.red)
+                    Button(action: action) {
+                        Text("game_request_cancel", bundle: .module)
+                    }.tint(.red)
                 } else {
-                    Button("Accept", action: action)
+                    Button(action: action) {
+                        Text("game_request_accept", bundle: .module)
+                    }
                 }
             }
             .buttonStyle(.glassProminent)

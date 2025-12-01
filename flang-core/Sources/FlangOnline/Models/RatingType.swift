@@ -1,3 +1,5 @@
+import SwiftUI
+
 public enum RatingType: String, Codable, Hashable, Sendable {
     case classical
     case blitz
@@ -6,14 +8,14 @@ public enum RatingType: String, Codable, Hashable, Sendable {
     case daily
     case undefined
     
-    public var description: String {
+    public var localized: String {
         switch self {
-        case .classical: "Classical"
-        case .blitz: "Blitz"
-        case .bullet: "Bullet"
-        case .puzzle: "Puzzle"
-        case .daily: "Daily"
-        default: "Undefined"
+        case .classical: .init(localized: "rating_type_classical", bundle: .module)
+        case .blitz: .init(localized: "rating_type_blitz", bundle: .module)
+        case .bullet: .init(localized: "rating_type_bullet", bundle: .module)
+        case .puzzle: .init(localized: "rating_type_puzzle", bundle: .module)
+        case .daily: .init(localized: "rating_type_daily", bundle: .module)
+        default: .init(localized: "rating_type_undefined", bundle: .module)
         }
     }
     

@@ -53,16 +53,16 @@ struct OnlineGameScene: View {
                 errorMessage = error.localizedDescription
             }
         }
-        .alert("Error", isPresented: showError) {
-            Button("Dismiss") {}
+        .alert("title_error", isPresented: showError) {
+            Button("dismiss") {}
         } message: {
-            Text(errorMessage ?? "Unknown error")
+            Text(errorMessage ?? String(localized: "error_unknown"))
         }
         .onChange(of: onlineGameState?.playerColor) { oldValue, newValue in
             guard oldValue == nil, let newValue else { return }
             perspective = newValue == .white ? .singlePlayerWhite : .singlePlayerBlack
         }
-        .navigationTitle("Online Game #\(gameId.formatted())")
+        .navigationTitle(String(localized: "online_game_title_\(gameId.formatted())"))
     }
     
     @ViewBuilder
@@ -98,67 +98,67 @@ struct OnlineGameScene: View {
             .padding(.bottom, max(proxy.safeAreaInsets.bottom, 20))
             .ignoresSafeArea()
         }
-        .alert("Share", isPresented: $showShareSheet) {
-            Button("Share Game") {
+        .alert("share", isPresented: $showShareSheet) {
+            Button("share_game") {
                 if let fmn = try? onlineGameState.game.toFMN() {
                     UIPasteboard.general.string = fmn
                 }
             }
-            Button("Share Board") {
+            Button("share_board") {
                 UIPasteboard.general.string = onlineGameState.game.toFBN()
             }
-            Button("Cancel", role: .cancel) { }
+            Button("cancel", role: .cancel) { }
         } message: {
-            Text("The game or board will be copied to your clipboard in text form.")
+            Text("share_clipboard_message")
         }
-        .alert("Resign", isPresented: $showResignConfirmation) {
-            Button("Resign", role: .destructive) {
+        .alert("resign", isPresented: $showResignConfirmation) {
+            Button("resign", role: .destructive) {
                 Task {
                     try? await onlineGameState.resign()
                 }
             }
-            Button("Cancel", role: .cancel) { }
+            Button("cancel", role: .cancel) { }
         } message: {
-            Text("Are you sure you want to resign this game?")
+            Text("confirm_resign_message")
         }
     }
     
     @ViewBuilder private var loadingView: some View {
         VStack(spacing: 16) {
             ProgressView().controlSize(.large)
-            Text("Loading game...").foregroundStyle(.secondary)
+            Text("loading_game").foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
-    
+
     @ViewBuilder
     private func errorView(for onlineGameState: OnlineGameState, and error: Error) -> some View {
         VStack(spacing: 16) {
             Image(systemName: "exclamationmark.triangle")
                 .font(.system(size: 50))
                 .foregroundStyle(.tint)
-            Text("Error loading game")
+            Text("error_loading_game")
                 .font(.headline)
             Text(error.localizedDescription)
                 .font(.caption)
                 .foregroundStyle(.secondary)
-            Button("Retry") {
+            Button("retry") {
                 Task {
                     try? await onlineGameState.start()
                 }
             }
             .buttonStyle(.glassProminent)
-            Button("Dismiss", action: dismissAction.callAsFunction)
+            Button("dismiss", action: dismissAction.callAsFunction)
         }
         .tint(.red)
         .multilineTextAlignment(.center)
         .padding()
     }
-    
+
     @ViewBuilder private var fallbackView: some View {
         VStack {
-            Text("Something went wrong.")
-            Button("Dismiss", action: dismissAction.callAsFunction)
+            Text("error_generic")
+            Button("dismiss", action: dismissAction.callAsFunction)
         }
     }
 }

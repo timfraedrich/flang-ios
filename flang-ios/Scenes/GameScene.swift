@@ -29,21 +29,21 @@ struct GameScene: View {
         }
         .padding(.horizontal, 20)
         .navigationBarBackButtonHidden()
-        .alert("Share", isPresented: $showShareSheet) {
-            Button("Share Game") {
+        .alert("share", isPresented: $showShareSheet) {
+            Button("share_game") {
                 UIPasteboard.general.string = try? gameState.game.toFMN()
             }
-            Button("Share Board") {
+            Button("share_board") {
                 UIPasteboard.general.string = gameState.game.toFBN()
             }
-            Text("Cancel")
+            Button("cancel", role: .cancel) { }
         } message: {
-            Text("The game or board will be copied to your clipboard in text form.")
+            Text("share_clipboard_message")
         }
-        .alert("Abort", isPresented: $showAbortConfimation) {
-            Button("Abort", role: .destructive, action: dismissAction.callAsFunction)
+        .alert("abort", isPresented: $showAbortConfimation) {
+            Button("abort", role: .destructive, action: dismissAction.callAsFunction)
         } message: {
-            Text("Do you want to abort the game? All progress will be lost unless the game was backed up somewhere.")
+            Text("abort_game_message")
         }
     }
     

@@ -20,26 +20,26 @@ struct MainMenuScene: View {
                     .aspectRatio(contentMode: .fit)
                     .foregroundStyle(.primary)
                     .frame(height: 80)
-                Text("Flang")
+                Text("title_flang")
                     .fontWidth(.expanded)
                     .font(.system(size: 48, weight: .heavy))
-                
+
             }
             VStack(spacing: 16) {
-                menuButton("New Local Game", systemName: "plus.circle.fill", color: .blue) {
+                menuButton("menu_button_new_local_game", systemName: "plus.circle.fill", color: .blue) {
                     router.path.append(NavigationDestination.game(nil))
                 }
-                menuButton("Play Online", systemName: "globe", color: .purple) {
+                menuButton("menu_button_play_online", systemName: "globe", color: .purple) {
                     if sessionManager.isLoggedIn {
                         router.path.append(NavigationDestination.lobby)
                     } else {
                         router.showAuthentication = true
                     }
                 }
-                menuButton("Community", systemName: "trophy.fill", color: .orange) {
+                menuButton("menu_button_community", systemName: "trophy.fill", color: .orange) {
                     router.path.append(NavigationDestination.community)
                 }
-                menuButton("Load from Clipboard", systemName: "doc.on.clipboard.fill", color: .green) {
+                menuButton("menu_button_load_clipboard", systemName: "doc.on.clipboard.fill", color: .green) {
                     loadFromClipboard()
                 }
             }
@@ -69,12 +69,12 @@ struct MainMenuScene: View {
                 }
             }
         }
-        .alert("Load Error", isPresented: $showLoadError) {
-            Button("OK", role: .cancel) { }
+        .alert("load_error", isPresented: $showLoadError) {
+            Button("ok", role: .cancel) { }
         } message: {
             Text(loadErrorMessage)
         }
-        .navigationTitle("Main Menu")
+        .navigationTitle("main_menu")
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .title) {
@@ -84,11 +84,11 @@ struct MainMenuScene: View {
     }
     
     @ViewBuilder
-    private func menuButton(_ title: String, systemName: String, color: Color, action: @escaping () -> Void) -> some View {
+    private func menuButton(_ key: LocalizedStringKey, systemName: String, color: Color, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             HStack(spacing: 16) {
                 Image(systemName: systemName)
-                Text(title)
+                Text(key)
                 Spacer()
                 Image(systemName: "chevron.forward")
             }
@@ -105,7 +105,7 @@ struct MainMenuScene: View {
 
     private func loadFromClipboard() {
         guard let clipboardString = UIPasteboard.general.string else {
-            loadErrorMessage = "Clipboard is empty or doesn't contain text."
+            loadErrorMessage = String(localized: "clipboard_empty_error")
             showLoadError = true
             return
         }
@@ -126,7 +126,7 @@ struct MainMenuScene: View {
             return
         }
         // If all parsing attempts failed
-        loadErrorMessage = "Could not parse clipboard content as FBN, FMN, or FMNe notation.\n\nClipboard content: \(trimmed.prefix(100))..."
+        loadErrorMessage = String(localized: "clipboard_parse_error_\(trimmed.prefix(100))")
         showLoadError = true
     }
 }

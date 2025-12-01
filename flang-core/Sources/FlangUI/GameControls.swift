@@ -43,8 +43,20 @@ public struct GameControls: View {
                 if isFirstPlayerPerspective {
                     HStack {
                         Group {
-                            Button("close", systemImage: "xmark", action: closeAction)
-                            Button("share", systemImage: "square.and.arrow.up", action: shareAction)
+                            Button(action: closeAction) {
+                                Label {
+                                    Text("game_controls_close", bundle: .module)
+                                } icon: {
+                                    Image(systemName: "xmark")
+                                }
+                            }
+                            Button(action: shareAction) {
+                                Label {
+                                    Text("game_controls_share", bundle: .module)
+                                } icon: {
+                                    Image(systemName: "square.and.arrow.up")
+                                }
+                            }
                         }
                         .padding()
                     }
@@ -53,14 +65,38 @@ public struct GameControls: View {
                 Spacer()
                 HStack {
                     Group {
-                        Button("rotate board", systemImage: "arrow.trianglehead.2.counterclockwise.rotate.90", action: rotateBoardAction)
+                        Button(action: rotateBoardAction) {
+                            Label {
+                                Text("game_controls_rotate_board", bundle: .module)
+                            } icon: {
+                                Image(systemName: "arrow.trianglehead.2.counterclockwise.rotate.90")
+                            }
+                        }
                         Group {
-                            Button("backward", systemImage: "chevron.backward", action: backwardAction).disabled(!backEnabled)
-                            Button("forward", systemImage: "chevron.forward", action: forwardAction).disabled(!forwardEnabled)
+                            Button(action: backwardAction) {
+                                Label {
+                                    Text("game_controls_backward", bundle: .module)
+                                } icon: {
+                                    Image(systemName: "chevron.backward")
+                                }
+                            }.disabled(!backEnabled)
+                            Button(action: forwardAction) {
+                                Label {
+                                    Text("game_controls_forward", bundle: .module)
+                                } icon: {
+                                    Image(systemName: "chevron.forward")
+                                }
+                            }.disabled(!forwardEnabled)
                         }
                         .buttonRepeatBehavior(.enabled)
                         if let resignAction {
-                            Button("resign", systemImage: "flag.fill", action: resignAction).disabled(!canResign).tint(.red)
+                            Button(action: resignAction) {
+                                Label {
+                                    Text("game_controls_resign", bundle: .module)
+                                } icon: {
+                                    Image(systemName: "flag.fill")
+                                }
+                            }.disabled(!canResign).tint(.red)
                         }
                     }
                     .padding()

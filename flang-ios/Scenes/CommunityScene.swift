@@ -49,15 +49,15 @@ struct CommunityScene: View {
             performSearch()
         }
         .scrollIndicators(.hidden, axes: .horizontal)
-        .navigationTitle("Community")
+        .navigationTitle("tab_community")
         .navigationBarTitleDisplayMode(.inline)
         .task(loadData)
         .refreshable(action: loadData)
         .safeAreaInset(edge: .top) {
-            Picker("View", selection: $selectedTab) {
-                Text("Top Players").tag(Tab.top)
-                Text("Online").tag(Tab.online)
-                Text("Search").tag(Tab.search)
+            Picker("view", selection: $selectedTab) {
+                Text("tab_top_players").tag(Tab.top)
+                Text("tab_online").tag(Tab.online)
+                Text("search").tag(Tab.search)
             }
             .pickerStyle(.segmented)
             .padding()
@@ -73,7 +73,7 @@ struct CommunityScene: View {
             } else if let error, topPlayers.isEmpty {
                 errorView(message: error)
             } else if topPlayers.isEmpty {
-                emptyView(message: "No top players found")
+                emptyView(message: String(localized: "community_empty_top_players"))
             } else {
                 userList(for: topPlayers, showRank: true)
             }
@@ -90,7 +90,7 @@ struct CommunityScene: View {
             } else if let error, onlinePlayers.isEmpty {
                 errorView(message: error)
             } else if onlinePlayers.isEmpty {
-                emptyView(message: "No players online")
+                emptyView(message: String(localized: "community_empty_online"))
             } else {
                 userList(for: onlinePlayers)
             }
@@ -109,17 +109,17 @@ struct CommunityScene: View {
                     Image(systemName: "magnifyingglass")
                         .font(.system(size: 50))
                         .foregroundStyle(.secondary)
-                    Text("Search for players")
+                    Text("search_players")
                         .font(.headline)
                         .foregroundStyle(.secondary)
-                    Text("Enter a username to find players")
+                    Text("search_placeholder")
                         .font(.subheadline)
                         .foregroundStyle(.tertiary)
                         .multilineTextAlignment(.center)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else if searchResults.isEmpty && !isSearching {
-                emptyView(message: "No users found matching '\(searchText)'")
+                emptyView(message: String(localized: "community_search_no_results_\(searchText)"))
             } else {
                userList(for: searchResults)
             }
@@ -144,7 +144,7 @@ struct CommunityScene: View {
     private var loadingView: some View {
         VStack(spacing: 16) {
             ProgressView()
-            Text("Loading...")
+            Text("loading")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
         }
@@ -156,13 +156,13 @@ struct CommunityScene: View {
             Image(systemName: "exclamationmark.triangle")
                 .font(.system(size: 50))
                 .foregroundStyle(.red)
-            Text("Error")
+            Text("title_error")
                 .font(.headline)
             Text(message)
                 .font(.caption)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
-            Button("Retry") {
+            Button("retry") {
                 Task {
                     await loadData()
                 }

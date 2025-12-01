@@ -16,17 +16,17 @@ public struct ActiveGameRow: View {
             VStack(alignment: .leading, spacing: 8) {
                 HStack {
                     playerView(game.white, alignment: .leading)
-                    Text("vs").font(.subheadline).foregroundStyle(.secondary)
+                    Text("versus", bundle: .module).font(.subheadline).foregroundStyle(.secondary)
                     playerView(game.black, alignment: .trailing)
                 }
                 HStack {
                     Group {
                         Circle().frame(width: 8, height: 8)
-                        Text(game.running ? "In Progress" : "Finished")
+                        Text(game.running ? "game_state_in_progress" : "game_state_finished", bundle: .module)
                     }
                     .foregroundStyle(game.running ? .green : .gray)
                     Spacer()
-                    Text("Moves: \(game.moves)").foregroundStyle(.secondary)
+                    Text("moves_\(game.moves)", bundle: .module).foregroundStyle(.secondary)
                 }
                 .font(.caption)
             }

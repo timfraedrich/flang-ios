@@ -58,9 +58,9 @@ public struct GameHistoryRow: View {
                     .font(.caption.weight(.semibold))
                 HStack {
                     if gameInfo.configuration.isRated {
-                        Text("Rated").foregroundStyle(.orange)
+                        Text("game_config_rated", bundle: .module).foregroundStyle(.orange)
                     }
-                    Text("Moves: \(gameInfo.moves)")
+                    Text("moves_\(gameInfo.moves)", bundle: .module)
                 }
                 .font(.caption2)
             }

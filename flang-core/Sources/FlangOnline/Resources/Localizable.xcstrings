@@ -1,0 +1,312 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "api_error_base" : {
+      "comment" : "Base error message for API request failures",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API-Anfrage fehlgeschlagen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API request failed."
+          }
+        }
+      }
+    },
+    "api_error_http_%lld" : {
+      "comment" : "Error message with HTTP status code - %lld is the status code number",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HTTP %lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HTTP %lld"
+          }
+        }
+      }
+    },
+    "api_error_invalid_response" : {
+      "comment" : "Error message when server returns an invalid response",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Server-Antwort war ungültig."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The server response was invalid."
+          }
+        }
+      }
+    },
+    "api_error_invalid_url" : {
+      "comment" : "Error message when the provided URL is invalid",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die angegebene URL war ungültig."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The provided URL was invalid."
+          }
+        }
+      }
+    },
+    "blitz_3m" : {
+      "comment" : "Label for blitz game preset with 3 minute duration",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blitz (3 Min.)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blitz (3 min)"
+          }
+        }
+      }
+    },
+    "blitz_5m" : {
+      "comment" : "Label for blitz game preset with 5 minute duration",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blitz (5 Min.)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blitz (5 min)"
+          }
+        }
+      }
+    },
+    "bullet_1m" : {
+      "comment" : "Label for bullet game preset with 1 minute duration",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bullet (1 Min.)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bullet (1 min)"
+          }
+        }
+      }
+    },
+    "bullet_2m_1s" : {
+      "comment" : "Label for bullet game preset with 2 minutes plus 1 second increment",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bullet (2+1)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bullet (2+1)"
+          }
+        }
+      }
+    },
+    "classical_30m" : {
+      "comment" : "Label for classical game preset with 30 minute duration",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klassisch (30 Min.)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Classical (30 min)"
+          }
+        }
+      }
+    },
+    "game_type_daily" : {
+      "comment" : "Label for daily game type (turn-based games)",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Täglich"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daily"
+          }
+        }
+      }
+    },
+    "game_type_live" : {
+      "comment" : "Label for live game type (real-time games)",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Live"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Live"
+          }
+        }
+      }
+    },
+    "rapid_10m" : {
+      "comment" : "Label for rapid game preset with 10 minute duration",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rapid (10 Min.)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rapid (10 min)"
+          }
+        }
+      }
+    },
+    "rating_type_blitz" : {
+      "comment" : "Label for blitz rating category",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blitz"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blitz"
+          }
+        }
+      }
+    },
+    "rating_type_bullet" : {
+      "comment" : "Label for bullet rating category",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bullet"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bullet"
+          }
+        }
+      }
+    },
+    "rating_type_classical" : {
+      "comment" : "Label for classical rating category",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klassisch"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Classical"
+          }
+        }
+      }
+    },
+    "rating_type_daily" : {
+      "comment" : "Label for daily rating category",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Täglich"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daily"
+          }
+        }
+      }
+    },
+    "rating_type_puzzle" : {
+      "comment" : "Label for puzzle rating category",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rätsel"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puzzle"
+          }
+        }
+      }
+    },
+    "rating_type_undefined" : {
+      "comment" : "Label for undefined or unknown rating category",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Undefiniert"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Undefined"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.1"
+}

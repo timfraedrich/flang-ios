@@ -18,7 +18,7 @@ struct LobbyScene: View {
         List {
             // Active Games Section
             if !activeGames.isEmpty {
-                Section("My Active Games") {
+                Section("my_active_games") {
                     ForEach(activeGames, id: \.gameId) { game in
                         NavigationLink(value: NavigationDestination.onlineGame(id: game.gameId)) {
                             ActiveGameRow(game: game)
@@ -31,7 +31,7 @@ struct LobbyScene: View {
             // Game Requests Section
             if let lobby {
                 if !lobby.liveRequests.isEmpty {
-                    Section("Live Game Requests") {
+                    Section("live_game_requests") {
                         ForEach(lobby.liveRequests, id: \.id) { request in
                             if request.requester.username != sessionManager.status.username {
                                 GameRequestRow(liveRequest: request) {
@@ -43,7 +43,7 @@ struct LobbyScene: View {
                 }
 
                 if !lobby.dailyRequests.isEmpty {
-                    Section("Daily Game Requests") {
+                    Section("daily_game_requests") {
                         ForEach(lobby.dailyRequests, id: \.id) { request in
                             let userIsRequester = request.requester.username == sessionManager.status.username
                             GameRequestRow(dailyRequest: request, userIsRequester: userIsRequester) {
@@ -65,10 +65,10 @@ struct LobbyScene: View {
                         Image(systemName: "person.2.slash")
                             .font(.system(size: 50))
                             .foregroundStyle(.secondary)
-                        Text("No active games or requests")
+                        Text("no_active_games")
                             .font(.headline)
                             .foregroundStyle(.secondary)
-                        Text("Create a game request to start playing!")
+                        Text("create_request_prompt")
                             .font(.subheadline)
                             .foregroundStyle(.tertiary)
                             .multilineTextAlignment(.center)
@@ -78,7 +78,7 @@ struct LobbyScene: View {
                 }
             }
         }
-        .navigationTitle("Game Lobby")
+        .navigationTitle("game_lobby")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
@@ -87,8 +87,8 @@ struct LobbyScene: View {
                 }
             }
         }
-        .alert("Error", isPresented: .constant(error != nil)) {
-            Button("OK") { error = nil }
+        .alert("title_error", isPresented: .constant(error != nil)) {
+            Button("ok") { error = nil }
         } message: {
             if let error {
                 Text(error)
@@ -109,7 +109,7 @@ struct LobbyScene: View {
         do {
             activeGames = try await onlineGameService.getActiveGames()
         } catch {
-            self.error = "Failed to load active games: \(error.localizedDescription)"
+            self.error = String(localized: "lobby_error_load_games_\(error.localizedDescription)")
         }
     }
 
@@ -118,7 +118,7 @@ struct LobbyScene: View {
             do {
                 lobby = try await onlineGameService.getGameRequestLobby()
             } catch {
-                self.error = "Failed to load lobby: \(error.localizedDescription)"
+                self.error = String(localized: "lobby_error_load_lobby_\(error.localizedDescription)")
             }
         }
     }
@@ -129,7 +129,7 @@ struct LobbyScene: View {
                 let gameId = try await onlineGameService.acceptLiveGameRequest(id: id)
                 router.path.append(NavigationDestination.onlineGame(id: gameId))
             } catch {
-                self.error = "Failed to accept request: \(error.localizedDescription)"
+                self.error = String(localized: "lobby_error_accept_request_\(error.localizedDescription)")
             }
         }
     }
@@ -140,7 +140,7 @@ struct LobbyScene: View {
                 let gameId = try await onlineGameService.acceptLiveGameRequest(id: id)
                 router.path.append(NavigationDestination.onlineGame(id: gameId))
             } catch {
-                self.error = "Failed to accept daily request: \(error.localizedDescription)"
+                self.error = String(localized: "lobby_error_accept_daily_request_\(error.localizedDescription)")
             }
         }
     }
@@ -151,7 +151,7 @@ struct LobbyScene: View {
                 try await onlineGameService.cancelDailyGameRequest(id: id)
                 lobby = try await onlineGameService.getGameRequestLobby()
             } catch {
-                self.error = "Failed to cancel daily request: \(error.localizedDescription)"
+                self.error = String(localized: "lobby_error_cancel_request_\(error.localizedDescription)")
             }
         }
     }

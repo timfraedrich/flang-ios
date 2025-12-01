@@ -27,8 +27,8 @@ public struct RelativeDateText: View {
         let startOfDayTomorrow = calendar.startOfDay(for: oneDayAfter)
         let startOfDayOneWeekAgo = calendar.startOfDay(for: oneWeekPrior)
         let dayString = switch date {
-        case startOfDayToday..<startOfDayTomorrow: "Today"
-        case startOfDayYesterday..<startOfDayToday: "Yesterday"
+        case startOfDayToday..<startOfDayTomorrow: String(localized: "date_today", bundle: .module)
+        case startOfDayYesterday..<startOfDayToday: String(localized: "date_yesterday", bundle: .module)
         case startOfDayOneWeekAgo..<startOfDayYesterday: date.formatted(.dateTime.weekday(.wide))
         default: fallbackValue
         }

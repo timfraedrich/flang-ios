@@ -65,59 +65,59 @@ struct CreateOnlineGameRequestScene: View {
             ratingSection
             configurationSection
         }
-        .navigationTitle("Create Game Request")
+        .navigationTitle("create_game_request")
         .navigationBarTitleDisplayMode(.inline)
         .safeAreaInset(edge: .bottom, content: bottomSafeAreaInset)
         .ignoresSafeArea(.container, edges: .bottom)
         .disabled(isCreating)
     }
-    
+
     @ViewBuilder private var gameTypeSection: some View {
-        Section("Game Type") {
-            Picker("Game Type", selection: $gameType) {
+        Section("game_type") {
+            Picker("game_type", selection: $gameType) {
                 ForEach(GameType.allCases, id: \.hashValue) { type in
-                    Text(type.description).tag(type)
+                    Text(type.localized).tag(type)
                 }
             }
             .pickerStyle(.segmented)
         }
     }
-    
+
     @ViewBuilder private var ratingSection: some View {
-        Section("Rating") {
-            Toggle("Rated", isOn: $isRated)
-            Picker("Rating Range", selection: $ratingRange) {
+        Section("rating") {
+            Toggle("rated", isOn: $isRated)
+            Picker("rating_range", selection: $ratingRange) {
                 ForEach(GameRatingRange.allCases, id: \.hashValue) { range in
                     Text(range.description).tag(range)
                 }
             }
         }
     }
-    
+
     @ViewBuilder private var configurationSection: some View {
-        Section("Configuration") {
+        Section("game_configuration") {
             switch gameType {
             case .daily:
-                Picker("Time Per Move", selection: $dailyGameMoveDuration) {
+                Picker("game_time_per_move", selection: $dailyGameMoveDuration) {
                     ForEach(DailyGameMoveDuration.allCases, id: \.hashValue) { duration in
                         Text(duration.description).tag(duration)
                     }
                 }
             case .live:
-                Toggle("Allow Bot Opponents", isOn: $allowBots)
-                Picker("Preset", selection: $liveGamePreset) {
+                Toggle("allow_bot_opponents", isOn: $allowBots)
+                Picker("game_preset", selection: $liveGamePreset) {
                     ForEach(LiveGamePreset.allCases, id: \.hashValue) { preset in
-                        Text(preset.description).tag(preset)
+                        Text(preset.localized).tag(preset)
                     }
-                    Text("Custom").tag(LiveGamePreset?.none)
+                    Text("game_preset_custom").tag(LiveGamePreset?.none)
                 }
                 if liveGamePreset == nil {
-                    Picker("Duration", selection: $liveGameDuration) {
+                    Picker("game_duration", selection: $liveGameDuration) {
                         ForEach(LiveGameDuration.allCases, id: \.hashValue) { duration in
                             Text(duration.description).tag(duration)
                         }
                     }
-                    Picker("Increment Per Move", selection: $liveGameTimeIncrement) {
+                    Picker("game_increment_per_move", selection: $liveGameTimeIncrement) {
                         ForEach(LiveGameTimeIncrement.allCases, id: \.hashValue) { timeIncrement in
                             Text(timeIncrement.description).tag(timeIncrement)
                         }
@@ -126,7 +126,7 @@ struct CreateOnlineGameRequestScene: View {
             }
         }
     }
-    
+
     @ViewBuilder
     private func bottomSafeAreaInset() -> some View {
         Button(action: createGameRequest) {
@@ -134,7 +134,7 @@ struct CreateOnlineGameRequestScene: View {
                 if isCreating {
                     ProgressView().progressViewStyle(.circular).controlSize(.regular)
                 } else {
-                    Text("Create").bold()
+                    Text("create").bold()
                 }
             }
             .frame(maxWidth: .infinity)

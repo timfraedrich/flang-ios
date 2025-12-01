@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 public enum PieceType: RawRepresentable, Sendable {
     
@@ -31,6 +32,18 @@ public enum PieceType: RawRepresentable, Sendable {
         case .flanger: "f"
         case .uni: "q"
         case .king: "k"
+        }
+    }
+    
+    public var localized: String {
+        switch self {
+        case .none: .init(localized: "piece_type_none", bundle: .module)
+        case .pawn: .init(localized: "piece_type_pawn", bundle: .module)
+        case .horse: .init(localized: "piece_type_horse", bundle: .module)
+        case .rook: .init(localized: "piece_type_rook", bundle: .module)
+        case .flanger: .init(localized: "piece_type_flanger", bundle: .module)
+        case .uni: .init(localized: "piece_type_uni", bundle: .module)
+        case .king: .init(localized: "piece_type_king", bundle: .module)
         }
     }
 

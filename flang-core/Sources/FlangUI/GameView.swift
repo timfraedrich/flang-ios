@@ -21,7 +21,7 @@ public struct GameView: View {
                         .frame(width: proxy.size.width, height: proxy.size.width)
                         .disabled(gameState.winner != nil)
                     if let winner = gameState.winner {
-                        Text("\(winner == .black ? "Black" : "White") won!")
+                        Text("game_end_win_\(winner.localized)", bundle: .module)
                             .font(.largeTitle.bold())
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
