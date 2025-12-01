@@ -38,14 +38,10 @@ public struct SquareView: View {
             ZStack {
                 Rectangle().fill(squareColor)
                 
-                if isSelected {
-                    Rectangle().fill(Color.fieldSelected)
-                } else if isLegalMove && hasPiece {
+                if isSelected || isLegalMove && hasPiece {
                     Rectangle().fill(Color.fieldMove)
                 } else if isLegalMove {
-                    Circle()
-                        .fill(Color.fieldMove)
-                        .frame(width: proxy.size.width * 0.2, height: proxy.size.height * 0.2)
+                    Circle().fill(Color.fieldMove).frame(width: proxy.size.width * 0.2, height: proxy.size.height * 0.2)
                 } else if isFrozen {
                     if differentiateWithoutColor {
                         Image(systemName: "snowflake")
