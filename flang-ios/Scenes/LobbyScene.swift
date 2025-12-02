@@ -137,7 +137,7 @@ struct LobbyScene: View {
     private func acceptDailyGameRequest(id: Int) {
         Task {
             do {
-                let gameId = try await onlineGameService.acceptLiveGameRequest(id: id)
+                let gameId = try await onlineGameService.acceptDailyGameRequest(id: id)
                 router.path.append(NavigationDestination.onlineGame(id: gameId))
             } catch {
                 self.error = String(localized: "lobby_error_accept_daily_request_\(error.localizedDescription)")
