@@ -19,23 +19,38 @@ struct CommunityScene: View {
     init() {}
 
     var body: some View {
-        GeometryReader { proxy in
-            ScrollView(.horizontal) {
-                LazyHStack(spacing: .zero) {
-                    ForEach(Tab.allCases, id: \.hashValue) { tab in
-                        switch tab {
-                        case .top: topPlayersView
-                        case .online: onlinePlayersView
-                        case .search: searchView
+        ZStack {
+            GeometryReader { proxy in
+                ScrollView(.horizontal) {
+                    LazyHStack(spacing: .zero) {
+                        ForEach(Tab.allCases, id: \.hashValue) { tab in
+                            switch tab {
+                            case .top: topPlayersView
+                            case .online: onlinePlayersView
+                            case .search: searchView
+                            }
                         }
+                        .frame(width: proxy.size.width)
                     }
-                    .frame(width: proxy.size.width)
+                    .scrollTargetLayout()
                 }
-                .scrollTargetLayout()
+                .scrollIndicators(.hidden, axes: .horizontal)
+                .scrollTargetBehavior(.paging)
+                .scrollPosition(id: $selectedTab)
+                .safeAreaInset(edge: .top) {
+                    Picker("view", selection: $selectedTab) {
+                        Text("tab_top_players").tag(Tab.top)
+                        Text("tab_online").tag(Tab.online)
+                        Text("search").tag(Tab.search)
+                    }
+                    .pickerStyle(.segmented)
+                    .padding()
+                }
             }
-            .scrollTargetBehavior(.paging)
-            .scrollPosition(id: $selectedTab)
         }
+        .navigationTitle("tab_community")
+        .navigationBarTitleDisplayMode(.inline)
+        .task(loadData)
         .searchable(text: $searchText, isPresented: $showingSearch)
         .onChange(of: showingSearch) { oldValue, newValue in
             guard oldValue == false, newValue == true else { return }
@@ -48,20 +63,6 @@ struct CommunityScene: View {
             selectedTab = .search
             performSearch()
         }
-        .scrollIndicators(.hidden, axes: .horizontal)
-        .navigationTitle("tab_community")
-        .navigationBarTitleDisplayMode(.inline)
-        .task(loadData)
-        .refreshable(action: loadData)
-        .safeAreaInset(edge: .top) {
-            Picker("view", selection: $selectedTab) {
-                Text("tab_top_players").tag(Tab.top)
-                Text("tab_online").tag(Tab.online)
-                Text("search").tag(Tab.search)
-            }
-            .pickerStyle(.segmented)
-            .padding()
-        }
     }
 
     // MARK: - Top Players View
@@ -70,12 +71,17 @@ struct CommunityScene: View {
         Group {
             if isLoadingTop && topPlayers.isEmpty {
                 loadingView
-            } else if let error, topPlayers.isEmpty {
-                errorView(message: error)
-            } else if topPlayers.isEmpty {
-                emptyView(message: String(localized: "community_empty_top_players"))
             } else {
-                userList(for: topPlayers, showRank: true)
+                Group {
+                    if let error, topPlayers.isEmpty {
+                        errorView(message: error)
+                    } else if topPlayers.isEmpty {
+                        emptyView(message: String(localized: "community_empty_top_players"))
+                    } else {
+                        userList(for: topPlayers, showRank: true)
+                    }
+                }
+                .refreshable(action: loadTopPlayers)
             }
         }
         .id(Tab.top)
@@ -87,12 +93,17 @@ struct CommunityScene: View {
         Group {
             if isLoadingOnline && onlinePlayers.isEmpty {
                 loadingView
-            } else if let error, onlinePlayers.isEmpty {
-                errorView(message: error)
-            } else if onlinePlayers.isEmpty {
-                emptyView(message: String(localized: "community_empty_online"))
             } else {
-                userList(for: onlinePlayers)
+                Group {
+                    if let error, onlinePlayers.isEmpty {
+                        errorView(message: error)
+                    } else if onlinePlayers.isEmpty {
+                        emptyView(message: String(localized: "community_empty_online"))
+                    } else {
+                        userList(for: onlinePlayers)
+                    }
+                }
+                .refreshable(action: loadOnlinePlayers)
             }
         }
         .id(Tab.online)
@@ -121,7 +132,7 @@ struct CommunityScene: View {
             } else if searchResults.isEmpty && !isSearching {
                 emptyView(message: String(localized: "community_search_no_results_\(searchText)"))
             } else {
-               userList(for: searchResults)
+                userList(for: searchResults)
             }
         }
         .id(Tab.search)
