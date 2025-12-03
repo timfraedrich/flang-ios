@@ -18,18 +18,6 @@ public struct Board: Hashable, Sendable {
     }
     
     public private(set) var pieces: [Piece]
-    
-    public var winner: PieceColor? {
-        guard let whiteKing = findKingIndex(color: .white) else { return .black }
-        guard let blackKing = findKingIndex(color: .black) else { return .white }
-        return if Self.row(of: whiteKing) == Self.winningRow(for: .white) {
-            .white
-        } else if Self.row(of: blackKing) == Self.winningRow(for: .black) {
-            .black
-        } else {
-            nil
-        }
-    }
 
     // MARK: - Initialization
 
@@ -127,7 +115,7 @@ public struct Board: Hashable, Sendable {
     private static func row(of index: Index) -> Int { index / boardSize }
     private static func index(col: Int, row: Int) -> Index { row * boardSize + col }
     
-    static func winningRow(for color: PieceColor) -> Int {
+    static func opponentsBaseRow(for color: PieceColor) -> Int {
         color == .white ? boardSize - 1 : 0
     }
     
@@ -161,48 +149,59 @@ public struct Board: Hashable, Sendable {
         try? set(.init(), at: index)
     }
     
-    /// Unfreeze the piece of the given color
-    private mutating func unfreeze(_ color: PieceColor) {
+    public mutating func promotePawn(at position: BoardPosition) throws(Error) {
+        var piece = try piece(at: position.index)
+        guard piece.type != .none else { throw .noPieceFound }
+        guard piece.type == .pawn else { throw .onlyPawnsCanBePromoted }
+        piece.type = .uni
+        try set(piece, at: position.index)
+    }
+    
+    public mutating func demoteUni(at position: BoardPosition) throws(Error) {
+        var piece = try piece(at: position.index)
+        guard piece.type != .none else { throw .noPieceFound }
+        guard piece.type == .uni else { throw .onlyUnisCanBeDemoted }
+        piece.type = .pawn
+        try set(piece, at: position.index)
+    }
+    
+    /// Unfreeze all pieces of the given color.
+    /// - returns: The first unfrozen position.
+    @discardableResult
+    public mutating func unfreeze(_ color: PieceColor) -> BoardPosition? {
+        var firstUnfrozenPosition: BoardPosition?
         for index in 0...Self.arraySize {
             guard let piece = try? piece(at: index), piece.color == color && piece.frozen else { continue }
             pieces[index].frozen = false
+            guard firstUnfrozenPosition == nil else { continue }
+            firstUnfrozenPosition = .init(index: index)
         }
+        return firstUnfrozenPosition
     }
     
-    private mutating func freeze(at index: Index) throws(Error) {
-        let piece = try piece(at: index)
+    /// Freezes the piece at the specified position.
+    public mutating func freeze(at position: BoardPosition) throws(Error) {
+        let piece = try piece(at: position.index)
         guard piece.type != .none else { throw .noPieceFound }
         guard piece.type != .king else { throw .kingCannotBeFrozen }
-        pieces[index].frozen = true
+        pieces[position.index].frozen = true
     }
     
-    /// - returns: The piece that was taken by the move if not none and whether the moved piece was promoted.
+    /// - returns: The piece that was taken by the move if not none.
     /// - throws: Throws if the provided indices are out of bounds or the piece to move is of type `.none`
     /// - warning: This method does not check for move validity.
     @discardableResult
     public mutating func move(
         from fromPosition: BoardPosition,
         to toPosition: BoardPosition
-    ) throws(Error) -> (takenPiece: Piece?, promoted: Bool) {
+    ) throws(Error) -> Piece? {
         let fromIndex = fromPosition.index, toIndex = toPosition.index
-        var piece = try piece(at: fromIndex), takenPiece = try self.piece(at: toIndex)
+        let piece = try piece(at: fromIndex), takenPiece = try self.piece(at: toIndex)
         guard piece.type != .none else { throw .noPieceFound }
         guard !piece.frozen else { throw .pieceFrozen }
         clear(at: fromIndex)
-        let promoted: Bool
-        if piece.type == .pawn, Self.row(of: toIndex) == Self.winningRow(for: piece.color) {
-            piece.type = .uni
-            try set(piece, at: toIndex)
-            promoted = true
-        } else {
-            try set(piece, at: toIndex)
-            promoted = false
-        }
-        unfreeze(piece.color)
-        if piece.type != .king {
-            try freeze(at: toIndex)
-        }
-        return (takenPiece.type != .none ? takenPiece : nil, promoted)
+        try set(piece, at: toIndex)
+        return takenPiece
     }
     
     /// - throws: Throws if the provided indices are out of bounds, there is no piece to move back or the position to which the piece is
@@ -211,19 +210,14 @@ public struct Board: Hashable, Sendable {
     public mutating func revert(
         from fromPosition: BoardPosition,
         to toPosition: BoardPosition,
-        freeze previouslyFrozenPosition: BoardPosition?,
         reinstate takenPiece: Piece?
     ) throws(Error) {
-        let toIndex = toPosition.index, fromIndex = fromPosition.index, previouslyFrozenIndex = previouslyFrozenPosition?.index
+        let toIndex = toPosition.index, fromIndex = fromPosition.index
         let piece = try piece(at: toIndex)
         guard piece.type != .none else { throw .noPieceFound }
         guard try self.piece(at: fromIndex).type == .none else { throw .positionTaken }
         clear(at: toIndex)
         try set(piece, at: fromIndex)
-        unfreeze(piece.color)
-        if let previouslyFrozenIndex {
-            try freeze(at: previouslyFrozenIndex)
-        }
         if let takenPiece {
             try set(takenPiece, at: toIndex)
         }
@@ -231,15 +225,11 @@ public struct Board: Hashable, Sendable {
 
     // MARK: - Search
 
-    private func findIndex(type: PieceType, color: PieceColor) -> Index? {
+    public func findPiece(of type: PieceType, and color: PieceColor) -> BoardPosition? {
         for index in 0..<pieces.count where pieces[index].type == type && pieces[index].color == color {
-            return index
+            return .init(index: index)
         }
         return nil
-    }
-
-    private func findKingIndex(color: PieceColor) -> Index? {
-        findIndex(type: .king, color: color)
     }
     
     public func frozenBoardPosition(for pieceColor: PieceColor) -> BoardPosition? {
@@ -255,5 +245,7 @@ public struct Board: Hashable, Sendable {
         case pieceFrozen
         case positionTaken
         case kingCannotBeFrozen
+        case onlyPawnsCanBePromoted
+        case onlyUnisCanBeDemoted
     }
 }
