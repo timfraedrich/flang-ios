@@ -80,6 +80,7 @@ public class SessionManager {
         let now = Date.now
         let loginParams = LoginParameters(username: username, key: key)
         try await apiClient.sendRequest(to: .login, parameters: loginParams)
+        try clearSession()
         try saveSession(username: username, sessionKey: key)
         status = .loggedIn(username: username, sessionKey: key)
         lastAuthentication = now
@@ -89,19 +90,13 @@ public class SessionManager {
     
     private func tryToRestoreSession(username: String, sessionKey: String) {
         Task {
-            let status: Status
             do {
-                let loginParams = LoginParameters(username: username, key: sessionKey)
-                try await apiClient.sendRequest(to: .login, parameters: loginParams)
-                try clearSession()
-                try saveSession(username: username, sessionKey: sessionKey)
-                status = .loggedIn(username: username, sessionKey: sessionKey)
+                try await login(username: username, key: sessionKey)
             } catch {
                 try? clearSession()
                 status = .loggedOut
                 logger.error("Failed to restore session: \(error)")
             }
-            await MainActor.run { self.status = status }
         }
     }
     
