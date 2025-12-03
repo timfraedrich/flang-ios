@@ -43,14 +43,14 @@ public struct SquareView: View {
                 } else if isLegalMove {
                     Circle().fill(Color.fieldMove).frame(width: proxy.size.width * 0.2, height: proxy.size.height * 0.2)
                 } else if isFrozen {
+                    Rectangle().fill(Color.fieldFrozen)
                     if differentiateWithoutColor {
                         Image(systemName: "snowflake")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .foregroundStyle(Color.white)
-                            .padding(proxy.size.width * 0.1)
+                            .padding(proxy.size.width * 0.04)
                     }
-                    Rectangle().fill(Color.fieldFrozen)
                 }
                 
                 if let letterLabel {
