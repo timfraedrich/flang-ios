@@ -18,8 +18,8 @@ public enum GameObjective: Hashable, Sendable {
             let piece = board.piece(at: position)
             return piece.type != .none && piece.color == color ? color : nil
         case .captureKing:
-            guard let whiteKing = board.findPiece(of: .king, and: .white) else { return .black }
-            guard let blackKing = board.findPiece(of: .king, and: .black) else { return .white }
+            guard board.findPiece(of: .king, and: .white) != nil else { return .black }
+            guard board.findPiece(of: .king, and: .black) != nil else { return .white }
             return nil
         case .reachOtherSide:
             return if let whiteKing = board.findPiece(of: .king, and: .white), whiteKing.row == Board.opponentsBaseRow(for: .white) {
