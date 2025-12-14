@@ -1462,6 +1462,686 @@
           }
         }
       }
+    },
+    "finish" : {
+      "comment" : "Button label to finish an action or process",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fertig"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finish"
+          }
+        }
+      }
+    },
+    "next" : {
+      "comment" : "Button label to proceed to the next step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weiter"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next"
+          }
+        }
+      }
+    },
+    "tutorial_well_done" : {
+      "comment" : "Success message shown in tutorial when objective is completed",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gut gemacht!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Well done!"
+          }
+        }
+      }
+    },
+    "tutorial_introduction_title" : {
+      "comment" : "Title for tutorial introduction step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einführung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Introduction"
+          }
+        }
+      }
+    },
+    "tutorial_introduction_description" : {
+      "comment" : "Description for tutorial introduction step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieses Tutorial erklärt die Grundregeln von Flang, einem rundenbasierten Spiel, ähnlich wie Schach. Dies ist das Startbrett."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This tutorial aims to explain the basic rules of Flang, a turn based game, simmilar to chess. This is the initial board."
+          }
+        }
+      }
+    },
+    "tutorial_introduction_prompt" : {
+      "comment" : "Prompt for tutorial introduction step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drücke die Weiter-Taste, um fortzufahren."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To continue press the next button."
+          }
+        }
+      }
+    },
+    "tutorial_king_title" : {
+      "comment" : "Title for tutorial king piece step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der König"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The King"
+          }
+        }
+      }
+    },
+    "tutorial_king_description" : {
+      "comment" : "Description for tutorial king piece step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lass uns lernen, wie sich Figuren bewegen. Der König kann ein Feld in jede Richtung ziehen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Let's start by learning how pieces move. The king can move one square in any direction."
+          }
+        }
+      }
+    },
+    "tutorial_king_prompt" : {
+      "comment" : "Prompt for tutorial king piece step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlage den gegnerischen König!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Capture the enemy king!"
+          }
+        }
+      }
+    },
+    "tutorial_rook_title" : {
+      "comment" : "Title for tutorial rook piece step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Turm"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Rook"
+          }
+        }
+      }
+    },
+    "tutorial_rook_description" : {
+      "comment" : "Description for tutorial rook piece step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Turm kann sich horizontal und vertikal beliebig viele Felder bewegen, bis eine Figur im Weg steht."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The rook can move horizontally and vertically any number of squares until there is a piece in the way."
+          }
+        }
+      }
+    },
+    "tutorial_rook_prompt" : {
+      "comment" : "Prompt for tutorial rook piece step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlage den gegnerischen Turm!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Capture the enemy rook!"
+          }
+        }
+      }
+    },
+    "tutorial_horse_title" : {
+      "comment" : "Title for tutorial horse piece step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Pferd"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Horse"
+          }
+        }
+      }
+    },
+    "tutorial_horse_description" : {
+      "comment" : "Description for tutorial horse piece step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Pferd kann zwei Felder in eine Richtung und dann ein Feld in die andere Richtung springen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The horse can jump two squares in one and then one square in the other direction."
+          }
+        }
+      }
+    },
+    "tutorial_horse_prompt" : {
+      "comment" : "Prompt for tutorial horse piece step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlage das gegnerische Pferd!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Capture the enemy horse!"
+          }
+        }
+      }
+    },
+    "tutorial_uni_title" : {
+      "comment" : "Title for tutorial uni piece step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Uni"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Uni"
+          }
+        }
+      }
+    },
+    "tutorial_uni_description" : {
+      "comment" : "Description for tutorial uni piece step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Uni kann sich horizontal, vertikal und diagonal beliebig viele Felder bewegen, bis der Weg durch eine Figur blockiert wird. Es kann auch wie ein Pferd springen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The uni can move horizontally, vertically, and diagonally any number of squares, until the path is blocked by a piece. It can also jump like a horse."
+          }
+        }
+      }
+    },
+    "tutorial_uni_prompt" : {
+      "comment" : "Prompt for tutorial uni piece step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlage das gegnerische Uni!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Capture the enemy uni!"
+          }
+        }
+      }
+    },
+    "tutorial_flanger_title" : {
+      "comment" : "Title for tutorial flanger piece step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Flanger"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Flanger"
+          }
+        }
+      }
+    },
+    "tutorial_flanger_description" : {
+      "comment" : "Description for tutorial flanger piece step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Flanger bewegt sich im Zickzack horizontal und vertikal, bis er von einer anderen Figur blockiert wird. Er kann daher nur auf weißen Feldern stehen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The flanger moves in a zig-zack fashion horizontally and vertically until blocked by another piece. It can therefore only be on white squares."
+          }
+        }
+      }
+    },
+    "tutorial_flanger_prompt" : {
+      "comment" : "Prompt for tutorial flanger piece step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlage den gegnerischen Flanger!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Capture the enemy flanger!"
+          }
+        }
+      }
+    },
+    "tutorial_pawn_title" : {
+      "comment" : "Title for tutorial pawn piece step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Bauer"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Pawn"
+          }
+        }
+      }
+    },
+    "tutorial_pawn_description" : {
+      "comment" : "Description for tutorial pawn piece step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Bauer bewegt sich und schlägt Figuren in Vorwärtsrichtung."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The pawn moves and takes pieces in the forward direction."
+          }
+        }
+      }
+    },
+    "tutorial_pawn_prompt" : {
+      "comment" : "Prompt for tutorial pawn piece step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlage den gegnerischen Bauern!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Capture the enemy pawn!"
+          }
+        }
+      }
+    },
+    "tutorial_pawn_promotion_title" : {
+      "comment" : "Title for tutorial pawn promotion step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bauernumwandlung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pawn Promotion"
+          }
+        }
+      }
+    },
+    "tutorial_pawn_promotion_description" : {
+      "comment" : "Description for tutorial pawn promotion step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein Bauer kann in ein Uni umgewandelt werden, wenn er das Ende des Brettes erreicht."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A pawn can be promoted to a uni, when it reaches the end of the board."
+          }
+        }
+      }
+    },
+    "tutorial_pawn_promotion_prompt" : {
+      "comment" : "Prompt for tutorial pawn promotion step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlage den gegnerischen Bauern, nachdem du deinen umgewandelt hast!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Capture the enemy pawn after promoting yours!"
+          }
+        }
+      }
+    },
+    "tutorial_freeze_title" : {
+      "comment" : "Title for tutorial freeze mechanism step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einfrieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Freeze Mechanism"
+          }
+        }
+      }
+    },
+    "tutorial_freeze_description" : {
+      "comment" : "Description for tutorial freeze mechanism step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bei Flang wird eine Figur für einen Zug eingefroren, nachdem du sie bewegt hast. Dies gilt nicht für deinen König."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In Flang a piece is frozen for one turn, after you move it. This does not apply to your king."
+          }
+        }
+      }
+    },
+    "tutorial_freeze_prompt" : {
+      "comment" : "Prompt for tutorial freeze mechanism step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlage den gegnerischen König!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Capture the enemy king!"
+          }
+        }
+      }
+    },
+    "tutorial_winning_other_side_title" : {
+      "comment" : "Title for tutorial winning by reaching other side step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gewinnen - Andere Seite"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Winning - Other Side"
+          }
+        }
+      }
+    },
+    "tutorial_winning_other_side_description" : {
+      "comment" : "Description for tutorial winning by reaching other side step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es gibt zwei Möglichkeiten, ein Flang-Spiel zu gewinnen. Die erste ist, die gegnerische Seite des Brettes zu erreichen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There are two ways to win a game of Flang. The first is reaching the opponent's side of the board."
+          }
+        }
+      }
+    },
+    "tutorial_winning_other_side_prompt" : {
+      "comment" : "Prompt for tutorial winning by reaching other side step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gewinne, indem du die andere Seite erreichst!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Win by reaching the other side!"
+          }
+        }
+      }
+    },
+    "tutorial_winning_capture_title" : {
+      "comment" : "Title for tutorial winning by capturing king step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gewinnen - Schlagen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Winning - Capture"
+          }
+        }
+      }
+    },
+    "tutorial_winning_capture_description" : {
+      "comment" : "Description for tutorial winning by capturing king step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die zweite Möglichkeit, ein Flang-Spiel zu gewinnen, ist den gegnerischen König zu schlagen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The second way to win a game of Flang is by capturing the oppenents King."
+          }
+        }
+      }
+    },
+    "tutorial_winning_capture_prompt" : {
+      "comment" : "Prompt for tutorial winning by capturing king step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gewinne, indem du den gegnerischen König schlägst!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Win by capturing the enemy king!"
+          }
+        }
+      }
+    },
+    "tutorial_final_title" : {
+      "comment" : "Title for tutorial final step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Viel Spaß!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Have Fun!"
+          }
+        }
+      }
+    },
+    "tutorial_final_description" : {
+      "comment" : "Description for tutorial final step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jetzt, da du die Grundregeln von Flang kennst, viel Spaß bei deinem ersten Spiel!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Now that you know the basic rules of Flang, have fun playing your first game!"
+          }
+        }
+      }
+    },
+    "tutorial_final_prompt" : {
+      "comment" : "Prompt for tutorial final step",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schließe das Tutorial mit der Fertig-Taste."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close the tutorial using the finish button."
+          }
+        }
+      }
+    },
+    "undo" : {
+      "comment" : "Button label to undo the previous action",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rückgängig"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Undo"
+          }
+        }
+      }
     }
   },
   "version" : "1.1"

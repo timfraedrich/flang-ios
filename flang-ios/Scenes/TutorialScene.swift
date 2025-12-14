@@ -13,89 +13,89 @@ struct TutorialScene: View {
     
     let steps: [TutorialStep] = [
         .init(
-            title: "Introduction",
-            description: "This tutorial aims to explain the basic rules of Flang, a turn based game, simmilar to chess. This is the initial board.",
-            prompt: "To continue press the next button.",
+            title: .init(localized: "tutorial_introduction_title"),
+            description: .init(localized: "tutorial_introduction_description"),
+            prompt: .init(localized: "tutorial_introduction_prompt"),
             initialBoard: .defaultPosition(),
             objective: .none,
             interactionDisabled: true
         ),
         .init(
-            title: "The King",
-            description: "Let's start by learning how pieces move. The king can move one square in any direction.",
-            prompt: "Capture the enemy king!",
+            title: .init(localized: "tutorial_king_title"),
+            description: .init(localized: "tutorial_king_description"),
+            prompt: .init(localized: "tutorial_king_prompt"),
             initialBoard: .init(fromFBNPieces: "12K22k")!,
             objective: .claimPosition(.white, .init(algebraic: "D5")!)
         ),
         .init(
-            title: "The Rook",
-            description: "The rook can move horizontally and vertically any number of squares until there is a piece in the way.",
-            prompt: "Capture the enemy rook!",
+            title: .init(localized: "tutorial_rook_title"),
+            description: .init(localized: "tutorial_rook_description"),
+            prompt: .init(localized: "tutorial_rook_prompt"),
             initialBoard: .init(fromFBNPieces: "7R50r")!,
             objective: .claimPosition(.white, .init(algebraic: "C8")!)
         ),
         .init(
-            title: "The Horse",
-            description: "The horse can jump two squares in one and then one square in the other direction.",
-            prompt: "Capture the enemy horse!",
+            title: .init(localized: "tutorial_horse_title"),
+            description: .init(localized: "tutorial_horse_description"),
+            prompt: .init(localized: "tutorial_horse_prompt"),
             initialBoard: .init(fromFBNPieces: "27H22h")!,
             objective: .claimPosition(.white, .init(algebraic: "C7")!)
         ),
         .init(
-            title: "The Uni",
-            description: "The uni can move horizontally, vertically, and diagonally any number of squares, until the path is blocked by a piece. It can also jump like a horse.",
-            prompt: "Capture the enemy uni!",
+            title: .init(localized: "tutorial_uni_title"),
+            description: .init(localized: "tutorial_uni_description"),
+            prompt: .init(localized: "tutorial_uni_prompt"),
             initialBoard: .init(fromFBNPieces: "26U18u")!,
             objective: .claimPosition(.white, .init(algebraic: "F6")!)
         ),
         .init(
-            title: "The Flanger",
-            description: "The flanger moves in a zig-zack fashion horizontally and vertically until blocked by another piece. It can therefore only be on white squares.",
-            prompt: "Capture the enemy flanger!",
+            title: .init(localized: "tutorial_flanger_title"),
+            description: .init(localized: "tutorial_flanger_description"),
+            prompt: .init(localized: "tutorial_flanger_prompt"),
             initialBoard: .init(fromFBNPieces: "30F2f1P")!,
             objective: .claimPosition(.white, .init(algebraic: "B5")!)
         ),
         .init(
-            title: "The Pawn",
-            description: "The pawn moves and takes pieces in the forward direction.",
-            prompt: "Capture the enemy pawn!",
+            title: .init(localized: "tutorial_pawn_title"),
+            description: .init(localized: "tutorial_pawn_description"),
+            prompt: .init(localized: "tutorial_pawn_prompt"),
             initialBoard: .init(fromFBNPieces: "12P22p")!,
             objective: .claimPosition(.white, .init(algebraic: "D5")!)
         ),
         .init(
-            title: "Pawn Promotion",
-            description: "A pawn can be promoted to a uni, when it reaches the end of the board.",
-            prompt: "Capture the enemy pawn after promoting yours!",
+            title: .init(localized: "tutorial_pawn_promotion_title"),
+            description: .init(localized: "tutorial_pawn_promotion_description"),
+            prompt: .init(localized: "tutorial_pawn_promotion_prompt"),
             initialBoard: .init(fromFBNPieces: "35p15P")!,
             objective: .claimPosition(.white, .init(algebraic: "D5")!)
         ),
         .init(
-            title: "Freeze Mechanism",
-            description: "In Flang a piece is frozen for one turn, after you move it. This does not apply to your king.",
-            prompt: "Capture the enemy king!",
+            title: .init(localized: "tutorial_freeze_title"),
+            description: .init(localized: "tutorial_freeze_description"),
+            prompt: .init(localized: "tutorial_freeze_prompt"),
             initialBoard: .init(fromFBNPieces: "10PPP1F15p31k")!,
             objective: .claimPosition(.white, .init(algebraic: "G8")!),
             freezePieces: true
         ),
         .init(
-            title: "Winning - Other Side",
-            description: "There are two ways to win a game of Flang. The first is reaching the opponent's side of the board.",
-            prompt: "Win by reaching the other side!",
+            title: .init(localized: "tutorial_winning_other_side_title"),
+            description: .init(localized: "tutorial_winning_other_side_description"),
+            prompt: .init(localized: "tutorial_winning_other_side_prompt"),
             initialBoard: .init(fromFBNPieces: "47Kpppppp2kufhrp")!,
             objective: .reachOtherSide
         ),
         .init(
-            title: "Winning - Capture",
-            description: "The second way to win a game of Flang is by capturing the oppenents King.",
-            prompt: "Win by capturing the enemy king!",
+            title: .init(localized: "tutorial_winning_capture_title"),
+            description: .init(localized: "tutorial_winning_capture_description"),
+            prompt: .init(localized: "tutorial_winning_capture_prompt"),
             initialBoard: .init(fromFBNPieces: "20U6K13p6p1pppp2kufhrp")!,
             objective: .captureKing,
             freezePieces: true
         ),
         .init(
-            title: "Have Fun!",
-            description: "Now that you know the basic rules of Flang, have fun playing your first game!",
-            prompt: "Close the tutorial using the finish button.",
+            title: .init(localized: "tutorial_final_title"),
+            description: .init(localized: "tutorial_final_description"),
+            prompt: .init(localized: "tutorial_final_prompt"),
             initialBoard: .defaultPosition(),
             objective: .none,
             interactionDisabled: true
@@ -120,16 +120,16 @@ struct TutorialScene: View {
                     .disabled(step.interactionDisabled || gameState.winner != nil)
                 
                 VStack(spacing: .zero) {
-                    
-                    Text(gameState.winner == nil ? step.prompt : "Well done!")
+
+                    Text(gameState.winner == nil ? step.prompt : .init(localized: "tutorial_well_done"))
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .padding(.horizontal, 20)
-                    
+
                     HStack {
                         if !step.interactionDisabled, canUndo {
                             Button(action: undo) {
                                 HStack {
-                                    Text("Undo")
+                                    Text("undo")
                                     Image(systemName: "arrow.uturn.backward")
                                 }
                             }
@@ -138,7 +138,7 @@ struct TutorialScene: View {
                         Spacer()
                         Button(action: nextOrFinish) {
                             HStack {
-                                Text(isLastStep ? "Finish" : "Next")
+                                Text(isLastStep ? "finish" : "next")
                                 Image(systemName: "chevron.forward")
                             }
                         }
@@ -147,7 +147,7 @@ struct TutorialScene: View {
                         .disabled(step.objective != .none && gameState.winner == nil)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                    
+
                 }
                 
                 .frame(maxHeight: .infinity)
