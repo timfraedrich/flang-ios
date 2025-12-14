@@ -121,7 +121,7 @@ struct TutorialScene: View {
                 
                 VStack(spacing: .zero) {
                     
-                    Text(step.prompt)
+                    Text(gameState.winner == nil ? step.prompt : "Well done!")
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .padding(.horizontal, 20)
                     
