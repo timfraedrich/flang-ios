@@ -5,8 +5,9 @@ import SwiftUI
 struct TutorialScene: View {
     
     @Environment(\.dismiss) private var dismiss
-    @State private var stepIndex: Int = 10
+    @State private var stepIndex: Int = 0
     @State private var gameState: GameState = .init()
+    @State private var confirmClose: Bool = false
     
     var canUndo: Bool { gameState.backEnabled }
     var isLastStep: Bool { stepIndex == steps.count - 1 }
@@ -139,7 +140,9 @@ struct TutorialScene: View {
                         Button(action: nextOrFinish) {
                             HStack {
                                 Text(isLastStep ? "finish" : "next")
-                                Image(systemName: "chevron.forward")
+                                if !isLastStep {
+                                    Image(systemName: "chevron.forward")
+                                }
                             }
                         }
                         .buttonStyle(.glassProminent)
@@ -159,10 +162,19 @@ struct TutorialScene: View {
             .padding(.bottom, max(proxy.safeAreaInsets.bottom, 20))
             .ignoresSafeArea()
         }
+        .interactiveDismissDisabled()
         .padding(.horizontal, 20)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
-                Button(role: .cancel, action: dismiss.callAsFunction)
+                Button(role: .cancel) {
+                    confirmClose = true
+                }
+                .confirmationDialog("skip_tutorial", isPresented: $confirmClose) {
+                    Button("skip_tutorial", role: .destructive, action: finish)
+                } message: {
+                    Text("skip_tutorial_confirmation")
+                }
+
             }
         }
         .onChange(of: stepIndex, initial: true) { _, newValue in
@@ -177,16 +189,21 @@ struct TutorialScene: View {
         }
     }
     
-    func nextOrFinish() {
+    private func nextOrFinish() {
         if stepIndex < steps.count - 1 {
             stepIndex += 1
         } else {
-            dismiss()
+            finish()
         }
     }
     
-    func undo() {
+    private func undo() {
         try? gameState.back()
+    }
+    
+    private func finish() {
+        UserDefaults.standard.hasFinishedTutorial = true
+        dismiss()
     }
     
     struct TutorialStep {

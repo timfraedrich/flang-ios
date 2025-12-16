@@ -52,20 +52,18 @@ struct AuthenticationScene: View {
     init() {}
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(spacing: 24) {
-                    header
-                    inputs
-                }
-                .padding(.top, 40)
+        ScrollView {
+            VStack(spacing: 24) {
+                header
+                inputs
             }
-            .scrollDismissesKeyboard(.interactively)
-            .navigationBarTitleDisplayMode(.inline)
-            .safeAreaInset(edge: .bottom, content: bottomSafeAreaInset)
-            .ignoresSafeArea(.container, edges: .bottom)
-            .toolbar(content: toolbarContent)
+            .padding(.top, 40)
         }
+        .scrollDismissesKeyboard(.interactively)
+        .navigationBarTitleDisplayMode(.inline)
+        .safeAreaInset(edge: .bottom, content: bottomSafeAreaInset)
+        .ignoresSafeArea(.container, edges: .bottom)
+        .toolbar(content: toolbarContent)
     }
     
     @ViewBuilder private var header: some View {

@@ -5,8 +5,8 @@ import SwiftUI
 @main
 struct FlangApp: App {
 
-    @State private var flangOnline = try? FlangOnline()
-    @State private var router = Router()
+    @State private var flangOnline: FlangOnline?
+    @State private var router: Router
     @Environment(\.openURL) var openURL
 
     var body: some Scene {
@@ -30,8 +30,15 @@ struct FlangApp: App {
                                 PlayerProfileScene(username: username)
                             }
                         }
+                        .sheet(isPresented: $router.showTutorial) {
+                            NavigationStack {
+                                TutorialScene()
+                            }
+                        }
                         .sheet(isPresented: $router.showAuthentication) {
-                            AuthenticationScene()
+                            NavigationStack {
+                                AuthenticationScene()
+                            }
                         }
                 }
                 .environment(flangOnline.sessionManager)
@@ -42,5 +49,10 @@ struct FlangApp: App {
                 Text("flang_online_init_error")
             }
         }
+    }
+    
+    init() {
+        flangOnline = try? FlangOnline()
+        router = .init(showTutorial: !UserDefaults.standard.hasFinishedTutorial)
     }
 }
