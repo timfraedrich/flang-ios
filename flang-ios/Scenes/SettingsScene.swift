@@ -18,62 +18,9 @@ struct SettingsScene: View {
     
     var body: some View {
         List {
-            Section {
-                Button {
-                    switch sessionManager.status {
-                    case .loggedIn(let username, _):
-                        router.sheets.removeAll()
-                        router.path.append(NavigationDestination.playerProfile(username: username))
-                    case .loggedOut:
-                        router.sheets.append(.authentication)
-                    case .tryingToRestoreSession:
-                        break
-                    }
-                } label: {
-                    HStack(spacing: 10) {
-                        Group {
-                            switch sessionManager.status {
-                            case .loggedIn:
-                                Image(systemName: "person.circle.fill")
-                            case .loggedOut:
-                                Image(systemName: "person.circle")
-                            case .tryingToRestoreSession:
-                                ProgressView()
-                            }
-                        }
-                        .font(.system(size: 48))
-                        .controlSize(.extraLarge)
-                        
-                        VStack(alignment: .leading) {
-                            if sessionManager.username != nil {
-                                Text("settings_logged_in_as").font(.footnote).opacity(0.6)
-                            }
-                            Text(sessionManager.username ?? .init(localized: "register"))
-                                .font(.headline)
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                }
-                .tint(.primary)
-            }
-            Section {
-                Button("settings_show_tutorial") {
-                    router.sheets.append(.tutorial)
-                }
-            }
-            Section {
-                markdownLink("privacy_policy", file: "PRIVACY")
-                markdownLink("settings_copyright_notice", file: "NOTICE")
-                markdownLink("settings_license", file: "LICENSE")
-                Button {
-                    guard let url = URL(string: "https://github.com/timfraedrich/flang-ios") else { return }
-                    openURL.callAsFunction(url)
-                } label: {
-                    NavigationLink("settings_source_code", destination: EmptyView.init)
-                }
-                .foregroundStyle(.primary)
-                LabeledContent("settings_version", value: version)
-            }
+            optionalUserSection
+            tutorialSection
+            legalSection
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("settings")
@@ -81,7 +28,7 @@ struct SettingsScene: View {
             ToolbarItem(placement: .cancellationAction) {
                 Button(role: .cancel, action: dismiss.callAsFunction)
             }
-            if sessionManager.username != nil {
+            if sessionManager.isLoggedIn {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("logout", role: .destructive) {
                         confirmLogOut = true
@@ -96,6 +43,51 @@ struct SettingsScene: View {
                     .tint(.red)
                 }
             }
+        }
+    }
+    
+    @ViewBuilder private var optionalUserSection: some View {
+        if case .loggedIn(let username, _) = sessionManager.status {
+            Section {
+                Button {
+                    router.sheets.removeAll()
+                    router.path.append(NavigationDestination.playerProfile(username: username))
+                } label: {
+                    HStack(spacing: 10) {
+                        Image(systemName: "person.circle").font(.system(size: 48))
+                        VStack(alignment: .leading) {
+                            Text("settings_logged_in_as").font(.footnote).opacity(0.6)
+                            Text(username).font(.headline)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                }
+                .tint(.primary)
+            }
+        }
+    }
+    
+    @ViewBuilder private var tutorialSection: some View {
+        Section {
+            Button("settings_show_tutorial") {
+                router.sheets.append(.tutorial)
+            }
+        }
+    }
+    
+    @ViewBuilder private var legalSection: some View {
+        Section {
+            markdownLink("privacy_policy", file: "PRIVACY")
+            markdownLink("settings_copyright_notice", file: "NOTICE")
+            markdownLink("settings_license", file: "LICENSE")
+            Button {
+                guard let url = URL(string: "https://github.com/timfraedrich/flang-ios") else { return }
+                openURL.callAsFunction(url)
+            } label: {
+                NavigationLink("settings_source_code", destination: EmptyView.init)
+            }
+            .foregroundStyle(.primary)
+            LabeledContent("settings_version", value: version)
         }
     }
     
