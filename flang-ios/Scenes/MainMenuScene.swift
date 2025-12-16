@@ -8,11 +8,13 @@ struct MainMenuScene: View {
 
     @Environment(Router.self) private var router
     @Environment(SessionManager.self) private var sessionManager
+    @Environment(\.fontResolutionContext) var fontContext
     @State private var showLoadError = false
     @State private var loadErrorMessage = ""
     
     var body: some View {
         VStack(spacing: .zero) {
+            Spacer()
             VStack(spacing: 8) {
                 Image("flang_transparent")
                     .resizable()
@@ -25,6 +27,7 @@ struct MainMenuScene: View {
                     .font(.system(size: 48, weight: .heavy))
 
             }
+            Spacer()
             VStack(spacing: 16) {
                 menuButton("menu_button_new_local_game", systemName: "plus.circle.fill", color: .blue) {
                     router.path.append(NavigationDestination.game(nil))
@@ -44,10 +47,11 @@ struct MainMenuScene: View {
                 }
             }
             .padding(.horizontal, 32)
-            .frame(maxHeight: .infinity)
+            Spacer()
         }
+        .ignoresSafeArea()
         .toolbar {
-            ToolbarItem(placement: .primaryAction) {
+            ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     switch sessionManager.status {
                     case .loggedIn(let username, _):
@@ -85,6 +89,7 @@ struct MainMenuScene: View {
     
     @ViewBuilder
     private func menuButton(_ key: LocalizedStringKey, systemName: String, color: Color, action: @escaping () -> Void) -> some View {
+        let font = Font.title3
         Button(action: action) {
             HStack(spacing: 16) {
                 Image(systemName: systemName)
@@ -92,7 +97,8 @@ struct MainMenuScene: View {
                 Spacer()
                 Image(systemName: "chevron.forward")
             }
-            .font(.title3.weight(.semibold))
+            .frame(height: font.resolve(in: fontContext).pointSize)
+            .font(font.weight(.semibold))
             .padding(24)
             .glassEffect(.regular.interactive().tint(color.opacity(0.2)), in: .containerRelative)
             .contentShape(.containerRelative)
