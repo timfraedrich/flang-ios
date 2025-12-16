@@ -21,7 +21,7 @@ public struct StatBoxLabeledContentStyle: LabeledContentStyle {
         .padding(.vertical)
         .padding(.horizontal, 8)
         .background()
-        .clipShape(.containerRelative)
+        .clipShape(.rect(corners: .concentric(minimum: 16), isUniform: true))
     }
 }
 

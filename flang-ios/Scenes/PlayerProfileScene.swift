@@ -147,15 +147,13 @@ struct PlayerProfileScene: View {
     private func ratingsSection(for playerProfile: PlayerProfile) -> some View {
         Section {
             HStack(spacing: 12) {
-                Group {
-                    ForEach(playerProfile.ratings, id: \.type.hashValue) { rating in
-                        LabeledContent(rating.type.localized) {
-                            RatingLabel(rating: rating.value)
-                        }
+                ForEach(playerProfile.ratings, id: \.type.hashValue) { rating in
+                    LabeledContent(rating.type.localized) {
+                        RatingLabel(rating: rating.value)
                     }
                 }
-                .backgroundStyle(colorScheme == .dark ? AnyShapeStyle(.background.secondary) : AnyShapeStyle(.background))
             }
+            .backgroundStyle(colorScheme == .dark ? AnyShapeStyle(.background.secondary) : AnyShapeStyle(.background))
             .labeledContentStyle(.statBox)
             .listRowBackground(Color.clear)
             .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
