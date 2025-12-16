@@ -28,9 +28,10 @@ public class CommunityService {
         return response.users
     }
 
-    /// Get top players
-    public func getTopPlayers() async throws -> [UserInfo] {
-        let response: UserInfosResponse = try await apiClient.sendRequest(to: .getTopPlayers)
+    /// Get top players for bullet, blitz, classical or daily. Other rating types might result in an error.
+    public func getTopPlayers(for type: RatingType) async throws -> [UserInfo] {
+        let parameters = GetTopPlayersParameters(type: type)
+        let response: UserInfosResponse = try await apiClient.sendRequest(to: .getTopPlayers, parameters: parameters)
         return response.users
     }
 

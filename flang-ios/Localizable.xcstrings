@@ -1208,6 +1208,23 @@
         }
       }
     },
+    "rating_category" : {
+      "comment" : "Label for rating type picker in leaderboard view.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wertungskategorie"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rating Category"
+          }
+        }
+      }
+    },
     "rating_history" : {
       "comment" : "Section header for rating history",
       "localizations" : {

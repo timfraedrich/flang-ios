@@ -15,6 +15,9 @@ struct CommunityScene: View {
     @State private var error: String?
     @State private var selectedTab: Tab? = .top
     @State private var showingSearch: Bool = false
+    @State private var topPlayersRatingType: RatingType = .blitz
+    
+    private let availableRatingTypes: [RatingType] = [.bullet, .blitz, .classical]
     
     init() {}
 
@@ -38,10 +41,19 @@ struct CommunityScene: View {
                 .scrollTargetBehavior(.paging)
                 .scrollPosition(id: $selectedTab)
                 .safeAreaInset(edge: .top) {
-                    Picker("view", selection: $selectedTab) {
-                        Text("tab_top_players").tag(Tab.top)
-                        Text("tab_online").tag(Tab.online)
-                        Text("search").tag(Tab.search)
+                    VStack(spacing: 8) {
+                        Picker("view", selection: $selectedTab) {
+                            Text("tab_top_players").tag(Tab.top)
+                            Text("tab_online").tag(Tab.online)
+                            Text("search").tag(Tab.search)
+                        }
+                        if selectedTab == .top {
+                            Picker("rating_category", selection: $topPlayersRatingType) {
+                                ForEach(availableRatingTypes, id: \.hashValue) { type in
+                                    Text(type.localized).tag(type)
+                                }
+                            }
+                        }
                     }
                     .pickerStyle(.segmented)
                     .padding()
@@ -52,6 +64,9 @@ struct CommunityScene: View {
         .navigationBarTitleDisplayMode(.inline)
         .task(loadData)
         .searchable(text: $searchText, isPresented: $showingSearch)
+        .onChange(of: topPlayersRatingType) {
+            Task { await loadTopPlayers() }
+        }
         .onChange(of: showingSearch) { oldValue, newValue in
             guard oldValue == false, newValue == true else { return }
             selectedTab = .search
@@ -210,7 +225,7 @@ struct CommunityScene: View {
         error = nil
 
         do {
-            topPlayers = try await communityService.getTopPlayers()
+            topPlayers = try await communityService.getTopPlayers(for: topPlayersRatingType)
         } catch {
             self.error = error.localizedDescription
         }
