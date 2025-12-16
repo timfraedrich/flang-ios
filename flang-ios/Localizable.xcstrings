@@ -1395,6 +1395,23 @@
         }
       }
     },
+    "settings_source_code" : {
+      "comment" : "Title for settings item that opens the source code repository",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quellcode"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Source Code"
+          }
+        }
+      }
+    },
     "settings_version" : {
       "comment" : "Title for settings item that shows the app version",
       "localizations" : {

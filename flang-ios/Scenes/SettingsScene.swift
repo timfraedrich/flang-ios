@@ -5,6 +5,7 @@ import SwiftUI
 struct SettingsScene: View {
     
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.openURL) private var openURL
     @Environment(Router.self) private var router
     @Environment(SessionManager.self) private var sessionManager
     @State private var confirmLogOut = false
@@ -63,6 +64,13 @@ struct SettingsScene: View {
             Section {
                 markdownLink("settings_copyright_notice", file: "NOTICE")
                 markdownLink("settings_license", file: "LICENSE")
+                Button {
+                    guard let url = URL(string: "https://github.com/timfraedrich/flang-ios") else { return }
+                    openURL.callAsFunction(url)
+                } label: {
+                    NavigationLink("settings_source_code", destination: EmptyView.init)
+                }
+                .foregroundStyle(.primary)
                 LabeledContent("settings_version", value: version)
             }
         }
