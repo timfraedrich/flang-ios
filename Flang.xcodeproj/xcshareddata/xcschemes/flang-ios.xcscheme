@@ -18,7 +18,7 @@
                BlueprintIdentifier = "22FA3D992EA0E14900F6CCB9"
                BuildableName = "flang-ios.app"
                BlueprintName = "flang-ios"
-               ReferencedContainer = "container:flang-ios.xcodeproj">
+               ReferencedContainer = "container:Flang.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -38,7 +38,7 @@
                BlueprintIdentifier = "2280E2EE2EBFFA54005C0C8B"
                BuildableName = "flang-ios-tests.xctest"
                BlueprintName = "flang-ios-tests"
-               ReferencedContainer = "container:flang-ios.xcodeproj">
+               ReferencedContainer = "container:Flang.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -60,7 +60,7 @@
             BlueprintIdentifier = "22FA3D992EA0E14900F6CCB9"
             BuildableName = "flang-ios.app"
             BlueprintName = "flang-ios"
-            ReferencedContainer = "container:flang-ios.xcodeproj">
+            ReferencedContainer = "container:Flang.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -77,7 +77,7 @@
             BlueprintIdentifier = "22FA3D992EA0E14900F6CCB9"
             BuildableName = "flang-ios.app"
             BlueprintName = "flang-ios"
-            ReferencedContainer = "container:flang-ios.xcodeproj">
+            ReferencedContainer = "container:Flang.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

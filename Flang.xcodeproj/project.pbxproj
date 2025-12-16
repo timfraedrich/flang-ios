@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22B7D1672EF179E000C02359 /* LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = 22B7D1652EF179E000C02359 /* LICENSE.md */; };
+		22B7D1682EF179E000C02359 /* NOTICE.md in Resources */ = {isa = PBXBuildFile; fileRef = 22B7D1662EF179E000C02359 /* NOTICE.md */; };
+		22B7D16C2EF17D7B00C02359 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 22B7D16B2EF17D7B00C02359 /* MarkdownUI */; };
 		22DAFBB82ED0F62B00C72A76 /* FlangCore in Frameworks */ = {isa = PBXBuildFile; productRef = 22DAFBB72ED0F62B00C72A76 /* FlangCore */; };
 /* End PBXBuildFile section */
 
@@ -23,7 +26,9 @@
 /* Begin PBXFileReference section */
 		2280E2EF2EBFFA54005C0C8B /* flang-ios-tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "flang-ios-tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2285B0692ED0BA460033A954 /* flang-core */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "flang-core"; sourceTree = "<group>"; };
-		22FA3D9A2EA0E14900F6CCB9 /* flang-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "flang-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		22B7D1652EF179E000C02359 /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
+		22B7D1662EF179E000C02359 /* NOTICE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = NOTICE.md; sourceTree = "<group>"; };
+		22FA3D9A2EA0E14900F6CCB9 /* Flang.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flang.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -47,6 +52,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				22DAFBB82ED0F62B00C72A76 /* FlangCore in Frameworks */,
+				22B7D16C2EF17D7B00C02359 /* MarkdownUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,6 +64,8 @@
 			children = (
 				22FA3D9C2EA0E14900F6CCB9 /* flang-ios */,
 				2285B0692ED0BA460033A954 /* flang-core */,
+				22B7D1652EF179E000C02359 /* LICENSE.md */,
+				22B7D1662EF179E000C02359 /* NOTICE.md */,
 				22FA3D9B2EA0E14900F6CCB9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -65,7 +73,7 @@
 		22FA3D9B2EA0E14900F6CCB9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				22FA3D9A2EA0E14900F6CCB9 /* flang-ios.app */,
+				22FA3D9A2EA0E14900F6CCB9 /* Flang.app */,
 				2280E2EF2EBFFA54005C0C8B /* flang-ios-tests.xctest */,
 			);
 			name = Products;
@@ -101,10 +109,12 @@
 				22FA3D962EA0E14900F6CCB9 /* Sources */,
 				22FA3D972EA0E14900F6CCB9 /* Frameworks */,
 				22FA3D982EA0E14900F6CCB9 /* Resources */,
+				22FA5AF42EF18F0400F6CCB9 /* Copy Acknowledgements */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				22B7D1722EF17F5F00C02359 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				22FA3D9C2EA0E14900F6CCB9 /* flang-ios */,
@@ -112,9 +122,10 @@
 			name = "flang-ios";
 			packageProductDependencies = (
 				22DAFBB72ED0F62B00C72A76 /* FlangCore */,
+				22B7D16B2EF17D7B00C02359 /* MarkdownUI */,
 			);
 			productName = "flang-ios";
-			productReference = 22FA3D9A2EA0E14900F6CCB9 /* flang-ios.app */;
+			productReference = 22FA3D9A2EA0E14900F6CCB9 /* Flang.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -136,7 +147,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 22FA3D952EA0E14900F6CCB9 /* Build configuration list for PBXProject "flang-ios" */;
+			buildConfigurationList = 22FA3D952EA0E14900F6CCB9 /* Build configuration list for PBXProject "Flang" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -148,6 +159,8 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				22DAFBB62ED0F62B00C72A76 /* XCLocalSwiftPackageReference "flang-core" */,
+				22B7D1692EF17D6500C02359 /* XCRemoteSwiftPackageReference "LicensePlist" */,
+				22B7D16A2EF17D7B00C02359 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 22FA3D9B2EA0E14900F6CCB9 /* Products */;
@@ -172,10 +185,30 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22B7D1672EF179E000C02359 /* LICENSE.md in Resources */,
+				22B7D1682EF179E000C02359 /* NOTICE.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		22FA5AF42EF18F0400F6CCB9 /* Copy Acknowledgements */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Acknowledgements";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo \"Will copy acknowledgements\"\n\nACKNOWLEDGEMENTS_DIR=${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/com.mono0926.LicensePlist.Output\nDESTINATION_PATH=${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Settings.bundle/\n\ncp -r \"${ACKNOWLEDGEMENTS_DIR}\"/* \"${DESTINATION_PATH}\"\nrm -rf \"${ACKNOWLEDGEMENTS_DIR}\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2280E2EB2EBFFA54005C0C8B /* Sources */ = {
@@ -199,6 +232,10 @@
 			isa = PBXTargetDependency;
 			target = 22FA3D992EA0E14900F6CCB9 /* flang-ios */;
 			targetProxy = 2280E2F32EBFFA54005C0C8B /* PBXContainerItemProxy */;
+		};
+		22B7D1722EF17F5F00C02359 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 22B7D1712EF17F5F00C02359 /* LicensePlistBuildTool */;
 		};
 /* End PBXTargetDependency section */
 
@@ -394,19 +431,22 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QT27QDFZ7N;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Flang;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.board-games";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "de.tadris.flang-ios";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Flang;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -417,7 +457,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -431,19 +471,22 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QT27QDFZ7N;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Flang;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.board-games";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "de.tadris.flang-ios";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Flang;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -454,7 +497,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -470,7 +513,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		22FA3D952EA0E14900F6CCB9 /* Build configuration list for PBXProject "flang-ios" */ = {
+		22FA3D952EA0E14900F6CCB9 /* Build configuration list for PBXProject "Flang" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				22FA3DA32EA0E14A00F6CCB9 /* Debug */,
@@ -497,7 +540,36 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		22B7D1692EF17D6500C02359 /* XCRemoteSwiftPackageReference "LicensePlist" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mono0926/LicensePlist";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.27.2;
+			};
+		};
+		22B7D16A2EF17D7B00C02359 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		22B7D16B2EF17D7B00C02359 /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 22B7D16A2EF17D7B00C02359 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
+		};
+		22B7D1712EF17F5F00C02359 /* LicensePlistBuildTool */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 22B7D1692EF17D6500C02359 /* XCRemoteSwiftPackageReference "LicensePlist" */;
+			productName = "plugin:LicensePlistBuildTool";
+		};
 		22DAFBB72ED0F62B00C72A76 /* FlangCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FlangCore;

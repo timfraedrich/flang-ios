@@ -174,7 +174,6 @@ struct TutorialScene: View {
                 } message: {
                     Text("skip_tutorial_confirmation")
                 }
-
             }
         }
         .onChange(of: stepIndex, initial: true) { _, newValue in
