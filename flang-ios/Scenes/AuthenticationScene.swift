@@ -4,11 +4,13 @@ import SwiftUI
 struct AuthenticationScene: View {
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.fontResolutionContext) private var fontContext
     @Environment(SessionManager.self) private var sessionManager
     @State private var isLogin = false
     @State private var username = ""
     @State private var password = ""
     @State private var confirmPassword = ""
+    @State private var acceptPrivacyPolicy: Bool = false
     @State private var isLoading = false
     @State private var errorMessage: String?
     
@@ -18,6 +20,15 @@ struct AuthenticationScene: View {
         username.count >= 5 &&
         username.count <= 15 &&
         (isLogin || password == confirmPassword)
+    }
+    
+    private var privacyPolicyAttributedString: AttributedString {
+        var attributedString = AttributedString(localized: "accept_privacy_policy")
+        let highlightSubstring = String(localized: "privacy_policy")
+        if let range = attributedString.range(of: highlightSubstring) {
+            attributedString[range].foregroundColor = .accentColor
+        }
+        return attributedString
     }
 
     private func handleSubmit() {
@@ -31,6 +42,9 @@ struct AuthenticationScene: View {
                     let allowedCharacters = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: "_-"))
                     if username.rangeOfCharacter(from: allowedCharacters.inverted) != nil {
                         throw AuthError.invalidUsername
+                    }
+                    if !acceptPrivacyPolicy {
+                        throw AuthError.privacyPolicyNotAccepted
                     }
                     try await sessionManager.register(username: username, password: password)
                     try await sessionManager.login(username: username, password: password)
@@ -88,6 +102,18 @@ struct AuthenticationScene: View {
                 inputField("input_confirm_password") {
                     SecureField("input_enter_password", text: $confirmPassword).textContentType(.password)
                 }
+                Toggle(isOn: $acceptPrivacyPolicy) {
+                    HStack(spacing: .zero) {
+                        NavigationLink {
+                            MarkdownFileView(file: "PRIVACY")
+                        } label: {
+                            Text(privacyPolicyAttributedString)
+                        }
+                        .foregroundStyle(.primary)
+                    }
+                }
+                .tint(.accentColor)
+                .padding()
             }
         }
         .backgroundStyle(.background.secondary)
@@ -153,13 +179,16 @@ struct AuthenticationScene: View {
     enum AuthError: Error, LocalizedError {
         case invalidUsername
         case passwordMismatch
+        case privacyPolicyNotAccepted
 
         var errorDescription: String? {
             switch self {
             case .invalidUsername:
-                return String(localized: "invalid_username_error")
+                .init(localized: "invalid_username_error")
             case .passwordMismatch:
-                return String(localized: "password_mismatch_error")
+                .init(localized: "password_mismatch_error")
+            case .privacyPolicyNotAccepted:
+                .init(localized: "privacy_policy_not_accepted_error")
             }
         }
     }

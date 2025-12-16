@@ -10,6 +10,7 @@
 		22B7D1672EF179E000C02359 /* LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = 22B7D1652EF179E000C02359 /* LICENSE.md */; };
 		22B7D1682EF179E000C02359 /* NOTICE.md in Resources */ = {isa = PBXBuildFile; fileRef = 22B7D1662EF179E000C02359 /* NOTICE.md */; };
 		22B7D16C2EF17D7B00C02359 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 22B7D16B2EF17D7B00C02359 /* MarkdownUI */; };
+		22B7DCB32EF1B0AC00C02359 /* PRIVACY.md in Resources */ = {isa = PBXBuildFile; fileRef = 22B7DCB22EF1B0AC00C02359 /* PRIVACY.md */; };
 		22DAFBB82ED0F62B00C72A76 /* FlangCore in Frameworks */ = {isa = PBXBuildFile; productRef = 22DAFBB72ED0F62B00C72A76 /* FlangCore */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +29,7 @@
 		2285B0692ED0BA460033A954 /* flang-core */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "flang-core"; sourceTree = "<group>"; };
 		22B7D1652EF179E000C02359 /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		22B7D1662EF179E000C02359 /* NOTICE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = NOTICE.md; sourceTree = "<group>"; };
+		22B7DCB22EF1B0AC00C02359 /* PRIVACY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = PRIVACY.md; sourceTree = "<group>"; };
 		22FA3D9A2EA0E14900F6CCB9 /* Flang.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flang.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -66,6 +68,7 @@
 				2285B0692ED0BA460033A954 /* flang-core */,
 				22B7D1652EF179E000C02359 /* LICENSE.md */,
 				22B7D1662EF179E000C02359 /* NOTICE.md */,
+				22B7DCB22EF1B0AC00C02359 /* PRIVACY.md */,
 				22FA3D9B2EA0E14900F6CCB9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -187,6 +190,7 @@
 			files = (
 				22B7D1672EF179E000C02359 /* LICENSE.md in Resources */,
 				22B7D1682EF179E000C02359 /* NOTICE.md in Resources */,
+				22B7DCB32EF1B0AC00C02359 /* PRIVACY.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -62,6 +62,7 @@ struct SettingsScene: View {
                 }
             }
             Section {
+                markdownLink("privacy_policy", file: "PRIVACY")
                 markdownLink("settings_copyright_notice", file: "NOTICE")
                 markdownLink("settings_license", file: "LICENSE")
                 Button {

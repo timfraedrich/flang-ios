@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "22FA3D992EA0E14900F6CCB9"
-               BuildableName = "flang-ios.app"
+               BuildableName = "Flang.app"
                BlueprintName = "flang-ios"
                ReferencedContainer = "container:Flang.xcodeproj">
             </BuildableReference>
@@ -58,7 +58,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "22FA3D992EA0E14900F6CCB9"
-            BuildableName = "flang-ios.app"
+            BuildableName = "Flang.app"
             BlueprintName = "flang-ios"
             ReferencedContainer = "container:Flang.xcodeproj">
          </BuildableReference>
@@ -75,7 +75,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "22FA3D992EA0E14900F6CCB9"
-            BuildableName = "flang-ios.app"
+            BuildableName = "Flang.app"
             BlueprintName = "flang-ios"
             ReferencedContainer = "container:Flang.xcodeproj">
          </BuildableReference>

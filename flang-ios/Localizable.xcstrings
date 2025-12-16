@@ -35,6 +35,23 @@
         }
       }
     },
+    "accept_privacy_policy" : {
+      "comment" : "Title shown to prompt the user to accept the privacy policy",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datenschutzerklärung akzeptieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accept Privacy Policy"
+          }
+        }
+      }
+    },
     "allow_bot_opponents" : {
       "comment" : "Toggle label for allowing bot opponents in live games",
       "localizations" : {
@@ -1119,6 +1136,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ Profile"
+          }
+        }
+      }
+    },
+    "privacy_policy" : {
+      "comment" : "Title for settings item that shows the privacy policy when tapped",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datenschutzerklärung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy Policy"
+          }
+        }
+      }
+    },
+    "privacy_policy_not_accepted_error" : {
+      "comment" : "Error message shown, when the user tries to register for an account without accepting the privacy policy",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du musst die Datenschutzerklärung akzeptieren, um einen Account zu erstellen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You must accept the privacy policy to register for an account."
           }
         }
       }
