@@ -101,34 +101,7 @@ struct SettingsScene: View {
     @ViewBuilder
     private func markdownLink(_ title: LocalizedStringKey, file: String) -> some View {
         NavigationLink(title) {
-            markdownView(title, file: file)
+            MarkdownFileView(file: file).navigationTitle(title)
         }
-    }
-    
-    @ViewBuilder
-    private func markdownView(_ title: LocalizedStringKey, file: String) -> some View {
-        Group {
-            if let markdownString = markdownString(for: file) {
-                ScrollView {
-                    Markdown(markdownString)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                }
-            } else {
-                VStack {
-                    Image(systemName: "exclamationmark.triangle.fill").font(.largeTitle)
-                    Text("error_file_not_found").font(.title.weight(.semibold))
-                }
-                .foregroundStyle(.red)
-            }
-        }
-        .navigationTitle(title)
-    }
-    
-    private func markdownString(for file: String) -> String? {
-        guard let file = Bundle.main.url(forResource: file, withExtension: "md"),
-              let content = try? String(contentsOf: file, encoding: .utf8)
-        else { return nil }
-        return content
     }
 }
