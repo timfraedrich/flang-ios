@@ -39,8 +39,8 @@ struct CreateOnlineGameRequestScene: View {
                         allowBots: allowBots,
                         isRated: isRated,
                         ratingRange: ratingRange,
-                        duration: liveGameDuration,
-                        timeIncrement: liveGameTimeIncrement
+                        duration: liveGamePreset?.duration ?? liveGameDuration,
+                        timeIncrement: liveGamePreset?.increment ?? liveGameTimeIncrement
                     )
                 }
                 await MainActor.run {
