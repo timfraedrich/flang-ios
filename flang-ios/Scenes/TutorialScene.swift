@@ -9,10 +9,10 @@ struct TutorialScene: View {
     @State private var gameState: GameState = .init()
     @State private var confirmClose: Bool = false
     
-    var canUndo: Bool { gameState.backEnabled }
-    var isLastStep: Bool { stepIndex == steps.count - 1 }
+    private var canUndo: Bool { gameState.backEnabled }
+    private var isLastStep: Bool { stepIndex == steps.count - 1 }
     
-    let steps: [TutorialStep] = [
+    private let steps: [TutorialStep] = [
         .init(
             title: .init(localized: "tutorial_introduction_title"),
             description: .init(localized: "tutorial_introduction_description"),
@@ -166,14 +166,12 @@ struct TutorialScene: View {
         .padding(.horizontal, 20)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
-                Button(role: .cancel) {
-                    confirmClose = true
-                }
-                .confirmationDialog("skip_tutorial", isPresented: $confirmClose) {
-                    Button("skip_tutorial", role: .destructive, action: finish)
-                } message: {
-                    Text("skip_tutorial_confirmation")
-                }
+                Button(role: .cancel, action: attemptClose)
+                    .confirmationDialog("skip_tutorial", isPresented: $confirmClose) {
+                        Button("skip_tutorial", role: .destructive, action: finish)
+                    } message: {
+                        Text("skip_tutorial_confirmation")
+                    }
             }
         }
         .onChange(of: stepIndex, initial: true) { _, newValue in
@@ -200,12 +198,20 @@ struct TutorialScene: View {
         try? gameState.back()
     }
     
+    private func attemptClose() {
+        if UserDefaults.standard.hasFinishedTutorial {
+            dismiss()
+        } else {
+            confirmClose = true
+        }
+    }
+    
     private func finish() {
         UserDefaults.standard.hasFinishedTutorial = true
         dismiss()
     }
     
-    struct TutorialStep {
+    private struct TutorialStep {
         let title: String
         let description: String
         let prompt: String

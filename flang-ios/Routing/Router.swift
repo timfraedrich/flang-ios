@@ -4,12 +4,20 @@ import SwiftUI
 class Router {
     
     var path: NavigationPath
-    var showAuthentication: Bool
-    var showTutorial: Bool
+    var sheets: [SheetDestination]
+    var currentSheet: SheetDestination? {
+        get { sheets.last }
+        set {
+            if let newValue {
+                sheets.append(newValue)
+            } else if !sheets.isEmpty {
+                sheets.removeLast()
+            }
+        }
+    }
     
-    init(path: NavigationPath = .init(), showAuthentication: Bool = false, showTutorial: Bool = false) {
+    init(path: NavigationPath = .init(), sheets: [SheetDestination]) {
         self.path = path
-        self.showAuthentication = showAuthentication
-        self.showTutorial = showTutorial
+        self.sheets = sheets
     }
 }

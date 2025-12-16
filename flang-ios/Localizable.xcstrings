@@ -290,6 +290,23 @@
         }
       }
     },
+    "error_file_not_found" : {
+      "comment" : "Error message displayed when a needed file was not found.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datei nicht gefunden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "File not found"
+          }
+        }
+      }
+    },
     "error_generic" : {
       "comment" : "Generic error message when specific error is unavailable",
       "localizations" : {
@@ -1289,6 +1306,108 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Search for players"
+          }
+        }
+      }
+    },
+    "settings" : {
+      "comment" : "Navigation title for settings scene",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        }
+      }
+    },
+    "settings_copyright_notice" : {
+      "comment" : "Title for settings item that shows a copyright notice when tapped",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Urheberrechtshinweis"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright Notice"
+          }
+        }
+      }
+    },
+    "settings_license" : {
+      "comment" : "Title for settings item that shows the software license when tapped",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lizenz"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "License"
+          }
+        }
+      }
+    },
+    "settings_logged_in_as" : {
+      "comment" : "Label presented above the username in the settings scene if the user is logged in",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eingeloggt als"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logged in as"
+          }
+        }
+      }
+    },
+    "settings_show_tutorial" : {
+      "comment" : "Action to open the game tutorial",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutorial anzeigen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show Tutorial"
+          }
+        }
+      }
+    },
+    "settings_version" : {
+      "comment" : "Title for settings item that shows the app version",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
           }
         }
       }

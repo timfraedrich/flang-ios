@@ -5,7 +5,7 @@ struct AuthenticationScene: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(SessionManager.self) private var sessionManager
-    @State private var isLogin = true
+    @State private var isLogin = false
     @State private var username = ""
     @State private var password = ""
     @State private var confirmPassword = ""

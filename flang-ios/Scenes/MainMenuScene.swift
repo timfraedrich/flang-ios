@@ -5,7 +5,7 @@ import FlangUI
 import SwiftUI
 
 struct MainMenuScene: View {
-
+    
     @Environment(Router.self) private var router
     @Environment(SessionManager.self) private var sessionManager
     @Environment(\.fontResolutionContext) var fontContext
@@ -36,7 +36,7 @@ struct MainMenuScene: View {
                     if sessionManager.isLoggedIn {
                         router.path.append(NavigationDestination.lobby)
                     } else {
-                        router.showAuthentication = true
+                        router.sheets.append(.authentication)
                     }
                 }
                 menuButton("menu_button_community", systemName: "trophy.fill", color: .orange) {
@@ -51,13 +51,13 @@ struct MainMenuScene: View {
         }
         .ignoresSafeArea()
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItem(placement: .topBarLeading) {
                 Button {
                     switch sessionManager.status {
                     case .loggedIn(let username, _):
                         router.path.append(NavigationDestination.playerProfile(username: username))
                     case .loggedOut:
-                        router.showAuthentication = true
+                        router.sheets.append(.authentication)
                     case .tryingToRestoreSession:
                         break
                     }
@@ -70,6 +70,13 @@ struct MainMenuScene: View {
                     case .tryingToRestoreSession:
                         ProgressView()
                     }
+                }
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    router.sheets.append(.settings)
+                } label: {
+                    Image(systemName: "gear")
                 }
             }
         }

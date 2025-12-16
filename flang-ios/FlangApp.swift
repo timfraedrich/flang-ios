@@ -30,14 +30,16 @@ struct FlangApp: App {
                                 PlayerProfileScene(username: username)
                             }
                         }
-                        .sheet(isPresented: $router.showTutorial) {
+                        .sheet(item: $router.currentSheet) { sheet in
                             NavigationStack {
-                                TutorialScene()
-                            }
-                        }
-                        .sheet(isPresented: $router.showAuthentication) {
-                            NavigationStack {
-                                AuthenticationScene()
+                                switch sheet {
+                                case .tutorial:
+                                    TutorialScene()
+                                case .authentication:
+                                    AuthenticationScene()
+                                case .settings:
+                                    SettingsScene()
+                                }
                             }
                         }
                 }
@@ -53,6 +55,7 @@ struct FlangApp: App {
     
     init() {
         flangOnline = try? FlangOnline()
-        router = .init(showTutorial: !UserDefaults.standard.hasFinishedTutorial)
+        let routerSheets: [SheetDestination] = if !UserDefaults.standard.hasFinishedTutorial { [.tutorial] } else { [] }
+        router = .init(sheets: routerSheets)
     }
 }
