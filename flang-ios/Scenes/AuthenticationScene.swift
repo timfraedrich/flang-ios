@@ -92,14 +92,14 @@ struct AuthenticationScene: View {
     
     @ViewBuilder private var inputs: some View {
         VStack(spacing: 16) {
-            inputField("input_username") {
+            FormInputField("input_username") {
                 TextField("input_enter_username", text: $username).textContentType(.username)
             }
-            inputField("input_password") {
+            FormInputField("input_password") {
                 SecureField("input_enter_password", text: $password).textContentType(.password)
             }
             if !isLogin {
-                inputField("input_confirm_password") {
+                FormInputField("input_confirm_password") {
                     SecureField("input_enter_password", text: $confirmPassword).textContentType(.password)
                 }
                 Toggle(isOn: $acceptPrivacyPolicy) {
@@ -118,23 +118,6 @@ struct AuthenticationScene: View {
         }
         .backgroundStyle(.background.secondary)
         .padding(.horizontal, 24)
-    }
-    
-    @ViewBuilder
-    private func inputField<V: View>(_ title: LocalizedStringKey, @ViewBuilder inputContent: () -> V) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(title)
-                .font(.subheadline.weight(.semibold))
-                .foregroundStyle(.secondary)
-                .padding(.horizontal)
-            inputContent()
-                .textInputAutocapitalization(.never)
-                .autocorrectionDisabled()
-                .textFieldStyle(.plain)
-                .padding(16)
-                .background()
-                .clipShape(.capsule)
-        }
     }
     
     @ViewBuilder
