@@ -290,6 +290,74 @@
         }
       }
     },
+    "delete_account" : {
+      "comment" : "Title for delete account screen and action",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konto löschen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Account"
+          }
+        }
+      }
+    },
+    "delete_account_button" : {
+      "comment" : "Button text for delete account action",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konto unwiderruflich löschen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Account Permanently"
+          }
+        }
+      }
+    },
+    "delete_account_consequences" : {
+      "comment" : "Description of what will be deleted with the account",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle deine Spiele, Statistiken und Kontodaten werden gelöscht. Diese Aktion kann nicht rückgängig gemacht werden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All your games, statistics, and account data will be deleted. This action cannot be undone."
+          }
+        }
+      }
+    },
+    "delete_account_warning" : {
+      "comment" : "Warning text explaining account deletion is permanent",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Aktion wird dein Konto sofort und unwiderruflich löschen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This action will immediately and permanently delete your account."
+          }
+        }
+      }
+    },
     "dismiss" : {
       "comment" : "Action to dismiss a dialog or view",
       "localizations" : {
@@ -2377,6 +2445,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "View"
+          }
+        }
+      }
+    },
+    "warning" : {
+      "comment" : "Title shown for a warning message.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Achtung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warning"
           }
         }
       }

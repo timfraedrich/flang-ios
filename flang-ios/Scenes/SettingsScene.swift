@@ -54,7 +54,7 @@ struct SettingsScene: View {
                     router.path.append(NavigationDestination.playerProfile(username: username))
                 } label: {
                     HStack(spacing: 10) {
-                        Image(systemName: "person.circle").font(.system(size: 48))
+                        Image(systemName: "person.circle.fill").font(.system(size: 48))
                         VStack(alignment: .leading) {
                             Text("settings_logged_in_as").font(.footnote).opacity(0.6)
                             Text(username).font(.headline)
@@ -63,6 +63,11 @@ struct SettingsScene: View {
                     }
                 }
                 .tint(.primary)
+
+                NavigationLink("delete_account") {
+                    DeleteAccountScene()
+                }
+                .foregroundStyle(.red)
             }
         }
     }
