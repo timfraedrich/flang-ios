@@ -8,6 +8,7 @@ enum APIEndpoint {
     case newSession
     case login
     case changePassword
+    case deleteAccount
 
     // MARK: - Game
 
@@ -49,6 +50,7 @@ enum APIEndpoint {
         case .newSession: "/newSession"
         case .login: "/login"
         case .changePassword: "/changePassword"
+        case .deleteAccount: "/account/submitDeletionHashed"
         case .getGame(let id, _, _): "/game/\(id)"
         case .executeMove(let id): "/game/move/\(id)"
         case .resignGame(let id): "/game/resign/\(id)"

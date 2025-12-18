@@ -75,6 +75,14 @@ public class SessionManager {
         try await login(username: username, key: sessionKey)
     }
     
+    /// Deletes the account of the user and logs them out.
+    public func deleteAccount(password: String) async throws {
+        guard let username else { throw Error.notLoggedIn }
+        let parameters = DeleteAccountParameters(username: username, passwordHash: Self.hashPassword(password))
+        try await apiClient.sendRequest(to: .deleteAccount, parameters: parameters)
+        try logout()
+    }
+    
     /// Login and sets cookie, valid for 30 minutes
     private func login(username: String, key: String) async throws {
         let now = Date.now
