@@ -5,7 +5,7 @@ enum PreviewInstances {
     
     static let userInfo = UserInfo(username: "ezragt", title: "GM", isBot: false, rating: 2000)
     
-    static let playerInfo = PlayerInfo(username: "jannis", rating: 2000, ratingDifference: -42, time: 69 * 1000, isBot: false, title: "")
+    static let playerInfo = PlayerInfo(username: "jannis", rating: 2000, ratingDifference: -42, time: 69 * 1000 * 1000, isBot: false, title: "")
     static let gmPlayerInfo = PlayerInfo(username: "tim", rating: 2000, ratingDifference: -42, time: 42 * 1000, isBot: false, title: "GM")
     static let botPlayerInfo = PlayerInfo(username: "TerminalBot", rating: 2100, ratingDifference: 69, time: 69 * 1000, isBot: true)
     

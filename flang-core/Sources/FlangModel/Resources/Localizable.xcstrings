@@ -120,6 +120,23 @@
         }
       }
     },
+    "piece_type_rider" : {
+      "comment" : "Label for rider piece type (Flang-specific piece, pawn and horse combined)",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reiter"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rider"
+          }
+        }
+      }
+    },
     "piece_type_rook" : {
       "comment" : "Label for rook piece type",
       "localizations" : {

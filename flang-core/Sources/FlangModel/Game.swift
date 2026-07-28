@@ -52,21 +52,25 @@ public struct Game: Hashable, Sendable {
     
     @discardableResult
     private mutating func moveOnBoard(from: BoardPosition, to: BoardPosition) throws -> HistoryEntry {
-        let piece = board[from]
-        let takenPiece = try board.move(from: from, to: to)
-        var promoted: Bool = false
-        if piece.type == .pawn, to.row == Board.opponentsBaseRow(for: piece.color) {
+        let movedPiece = board[from], takenPiece = board[to]
+        let capturing = takenPiece.type != .none && takenPiece.color != movedPiece.color
+        // The frozen piece has to be looked up before the move because a pawn merge can consume it
+        let previouslyFrozenPosition = board.frozenBoardPosition(for: atMove)
+        try board.move(from: from, to: to)
+        // A rider splitting up leaves a pawn behind, which promotes just like a moving pawn does
+        if board[to].type == .pawn, to.row == Board.opponentsBaseRow(for: movedPiece.color) {
             try board.promotePawn(at: to)
-            promoted = true
         }
-        let previouslyFrozenPosition = board.unfreeze(atMove)
-        if freezePieces, piece.type != .king {
+        board.unfreeze(atMove)
+        let resultingPiece = board[to]
+        // A horse or rider does not freeze when it captures a piece
+        if freezePieces, resultingPiece.type.hasFreeze, !(capturing && resultingPiece.type.skipsFreezeOnCapture) {
             try board.freeze(at: to)
         }
         if takeTurns {
             atMove = atMove.opponent
         }
-        return .init(action: .move(from: from, to: to), promoted: promoted, captured: takenPiece, previouslyFrozenPosition: previouslyFrozenPosition)
+        return .init(action: .move(from: from, to: to), movedPiece: movedPiece, takenPiece: takenPiece, previouslyFrozenPosition: previouslyFrozenPosition)
     }
     
     public mutating func perform(_ action: Action) throws {
@@ -81,7 +85,7 @@ public struct Game: Hashable, Sendable {
             let entry = try moveOnBoard(from: from, to: to)
             history.append(entry)
         case .resign:
-            history.append(.init(action: action, promoted: false, captured: nil, previouslyFrozenPosition: nil))
+            history.append(.init(action: action, movedPiece: .init(), takenPiece: .init(), previouslyFrozenPosition: nil))
         }
     }
     
@@ -91,10 +95,12 @@ public struct Game: Hashable, Sendable {
         let historyEntryToRevertTo = history[history.count - Int(newHistoryOffset)]
         switch historyEntryToRevertTo.action {
         case .move(let from, let to):
-            if historyEntryToRevertTo.promoted {
-                try board.demoteUni(at: to)
-            }
-            try board.revert(from: from, to: to, reinstate: historyEntryToRevertTo.captured)
+            try board.revert(
+                from: from,
+                to: to,
+                reinstate: historyEntryToRevertTo.movedPiece,
+                and: historyEntryToRevertTo.takenPiece
+            )
             if takeTurns {
                 atMove = atMove.opponent
             }
@@ -152,8 +158,10 @@ public struct Game: Hashable, Sendable {
     
     private struct HistoryEntry: Hashable {
         let action: Action
-        let promoted: Bool
-        let captured: Piece?
+        /// The piece that was located at the source position before the move.
+        let movedPiece: Piece
+        /// The piece that was located at the target position before the move.
+        let takenPiece: Piece
         let previouslyFrozenPosition: BoardPosition?
     }
     
