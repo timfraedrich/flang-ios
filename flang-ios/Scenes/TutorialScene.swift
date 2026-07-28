@@ -79,6 +79,29 @@ struct TutorialScene: View {
             freezePieces: true
         ),
         .init(
+            title: .init(localized: "tutorial_pawn_jump_title"),
+            description: .init(localized: "tutorial_pawn_jump_description"),
+            prompt: .init(localized: "tutorial_pawn_jump_prompt"),
+            initialBoard: .init(fromFBNPieces: "19P7P-7p28")!,
+            objective: .claimPosition(.white, .init(algebraic: "D5")!),
+            freezePieces: true
+        ),
+        .init(
+            title: .init(localized: "tutorial_rider_title"),
+            description: .init(localized: "tutorial_rider_description"),
+            prompt: .init(localized: "tutorial_rider_prompt"),
+            initialBoard: .init(fromFBNPieces: "11P7H21p22")!,
+            objective: .claimPosition(.white, .init(algebraic: "B6")!)
+        ),
+        .init(
+            title: .init(localized: "tutorial_fast_horse_title"),
+            description: .init(localized: "tutorial_fast_horse_description"),
+            prompt: .init(localized: "tutorial_fast_horse_prompt"),
+            initialBoard: .init(fromFBNPieces: "13PPP3H14p9p19")!,
+            objective: .claimPosition(.white, .init(algebraic: "E6")!),
+            freezePieces: true
+        ),
+        .init(
             title: .init(localized: "tutorial_winning_other_side_title"),
             description: .init(localized: "tutorial_winning_other_side_description"),
             prompt: .init(localized: "tutorial_winning_other_side_prompt"),
