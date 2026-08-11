@@ -40,7 +40,7 @@ struct CommunityScene: View {
                 .scrollIndicators(.hidden, axes: .horizontal)
                 .scrollTargetBehavior(.paging)
                 .scrollPosition(id: $selectedTab)
-                .safeAreaInset(edge: .top) {
+                .safeAreaBar(edge: .top) {
                     VStack(spacing: 8) {
                         Picker("view", selection: $selectedTab) {
                             Text("tab_top_players").tag(Tab.top)
@@ -162,6 +162,7 @@ struct CommunityScene: View {
                 NavigationLink(value: NavigationDestination.playerProfile(username: userInfo.username)) {
                     UserRow(user: userInfo, rank: showRank ? index + 1 : nil)
                 }
+                .listRowSeparator(.hidden, edges: index == 0 ? .top : index == userInfos.count - 1 ? .bottom : [])
             }
         }
         .listStyle(.plain)
