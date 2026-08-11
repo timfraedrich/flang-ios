@@ -255,10 +255,10 @@ public struct Board: Hashable, Sendable {
 
     /// Indicates whether a move could have been made by a pawn of the given color.
     private func isPawnMove(from fromPosition: BoardPosition, to toPosition: BoardPosition, for color: PieceColor) -> Bool {
-        let colDelta = toPosition.col - fromPosition.col, rowDelta = toPosition.row - fromPosition.row
-        let direction = RelativePieceMoves.pawnDirection(for: color)
-        // A single step forward, straight or diagonal, or a pawn dash two squares straight forward
-        return (rowDelta == direction && abs(colDelta) <= 1) || (rowDelta == direction * 2 && colDelta == 0)
+        let conventionalMoves = RelativePieceMoves.getMoveSequences(for: .pawn, and: color).flatMap(\.self)
+        let pawnDash = RelativePieceMoves.pawnDash(for: color)
+        let moves = conventionalMoves + [pawnDash]
+        return moves.contains { fromPosition + $0 == toPosition }
     }
 
     // MARK: - Search

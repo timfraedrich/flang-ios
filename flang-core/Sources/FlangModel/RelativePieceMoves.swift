@@ -28,9 +28,12 @@ enum RelativePieceMoves {
         [(-1, 1), (0, 2), (-1, 3), (0, 4), (-1, 5), (0, 6), (-1, 7)]
     ]
 
-    /// The forward direction of a pawn move for the given color.
-    static func pawnDirection(for color: PieceColor) -> Int {
-        color == .white ? 1 : -1
+    static func pawnFront(for color: PieceColor) -> Vector {
+        (0, color == .white ? 1 : -1)
+    }
+
+    static func pawnDash(for color: PieceColor) -> Vector {
+        (0, color == .white ? 2 : -2)
     }
 
     static func getMoveSequences(for type: PieceType, and color: PieceColor) -> [[Vector]] {

@@ -101,11 +101,10 @@ public class MoveGenerator {
             targets.append(targetPosition)
         }
         // Pawn dash: jump two squares forward when a pawn of the same color stands directly in front
-        let direction = RelativePieceMoves.pawnDirection(for: color)
-        if let frontPosition = position + (x: 0, y: direction),
+        if let frontPosition = position + RelativePieceMoves.pawnFront(for: color),
            board.piece(at: frontPosition).type == .pawn,
            board.piece(at: frontPosition).color == color,
-           let targetPosition = position + (x: 0, y: direction * 2),
+           let targetPosition = position + RelativePieceMoves.pawnDash(for: color),
            checkPawnTarget(at: targetPosition, color: color) {
             targets.append(targetPosition)
         }
