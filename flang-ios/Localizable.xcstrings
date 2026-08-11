@@ -1786,6 +1786,54 @@
         }
       }
     },
+    "tutorial_fast_horse_description" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pferde und Reiter werden nicht eingefroren, wenn sie eine Figur schlagen. Sie können daher im nächsten Zug erneut schlagen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Horses and riders are not frozen when they capture a piece. They can therefore capture again on your next turn."
+          }
+        }
+      }
+    },
+    "tutorial_fast_horse_prompt" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlage beide gegnerischen Bauern mit deinem Pferd!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Capture both enemy pawns with your horse!"
+          }
+        }
+      }
+    },
+    "tutorial_fast_horse_title" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schnelles Pferd"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fast Horse"
+          }
+        }
+      }
+    },
     "tutorial_final_description" : {
       "comment" : "Description for tutorial final step",
       "localizations" : {
@@ -2109,6 +2157,54 @@
         }
       }
     },
+    "tutorial_pawn_jump_description" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein Bauer kann über einen eigenen Bauern springen, der direkt vor ihm steht, und sich so zwei Felder vorwärts bewegen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A pawn can jump over a pawn of your color that stands directly in front of it, moving two squares forward."
+          }
+        }
+      }
+    },
+    "tutorial_pawn_jump_prompt" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein vorderer Bauer ist eingefroren. Springe über ihn, um den gegnerischen Bauern zu schlagen!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your front pawn is frozen. Jump over it to capture the enemy pawn!"
+          }
+        }
+      }
+    },
+    "tutorial_pawn_jump_title" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bauernsprung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pawn Jump"
+          }
+        }
+      }
+    },
     "tutorial_pawn_promotion_description" : {
       "comment" : "Description for tutorial pawn promotion step",
       "localizations" : {
@@ -2190,6 +2286,54 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "The Pawn"
+          }
+        }
+      }
+    },
+    "tutorial_rider_description" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein Bauer kann in ein eigenes Pferd ziehen. Zusammen werden sie zu einem Reiter, der sich wie ein Pferd bewegt. Macht der Reiter einen Bauernzug, teilt er sich wieder und lässt das Pferd zurück."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A pawn can move into a horse of your color. Together they become a rider, which moves like a horse. When the rider makes a pawn move, it splits up again and leaves the horse behind."
+          }
+        }
+      }
+    },
+    "tutorial_rider_prompt" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bilde einen Reiter und schlage den gegnerischen Bauern!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Form a rider and capture the enemy pawn!"
+          }
+        }
+      }
+    },
+    "tutorial_rider_title" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Reiter"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Rider"
           }
         }
       }

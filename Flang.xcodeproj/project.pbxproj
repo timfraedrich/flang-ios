@@ -37,6 +37,10 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		22FA3D9C2EA0E14900F6CCB9 /* flang-ios */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
 			path = "flang-ios";
 			sourceTree = "<group>";
 		};
@@ -241,7 +245,7 @@
 		};
 		22B7D1722EF17F5F00C02359 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			productRef = 22B7D1712EF17F5F00C02359 /* LicensePlistBuildTool */;
+			productRef = 22B7D1712EF17F5F00C02359 /* plugin:LicensePlistBuildTool */;
 		};
 /* End PBXTargetDependency section */
 
@@ -575,7 +579,7 @@
 			package = 22B7D16A2EF17D7B00C02359 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
 			productName = MarkdownUI;
 		};
-		22B7D1712EF17F5F00C02359 /* LicensePlistBuildTool */ = {
+		22B7D1712EF17F5F00C02359 /* plugin:LicensePlistBuildTool */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 22B7D1692EF17D6500C02359 /* XCRemoteSwiftPackageReference "LicensePlist" */;
 			productName = "plugin:LicensePlistBuildTool";

@@ -44,14 +44,15 @@ public class GameState {
             if selected == position {
                 // If tapping the same position, deselect
                 resetShownMoves()
+            } else if legalMoves.contains(position) {
+                // If tapping a legal move destination, make the move.
+                // This takes precedence over switching the selection because a pawn can move into a horse of the same color.
+                try? move(from: selected, to: position)
+                resetShownMoves()
             } else if let piece = getPiece(at: position), piece.color == atMove, !piece.frozen {
                 // If tapping another piece of the same color, switch selection
                 selectedPosition = position
                 calculateLegalMoves(for: position)
-            } else if legalMoves.contains(position) {
-                // If tapping a legal move destination, make the move
-                try? move(from: selected, to: position)
-                resetShownMoves()
             } else {
                 // Otherwise, deselect
                 resetShownMoves()

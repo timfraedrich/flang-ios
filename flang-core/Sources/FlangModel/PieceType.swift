@@ -6,6 +6,7 @@ public enum PieceType: RawRepresentable, Sendable {
     case none
     case pawn
     case horse
+    case rider
     case rook
     case flanger
     case uni
@@ -20,6 +21,7 @@ public enum PieceType: RawRepresentable, Sendable {
         case .flanger: 4
         case .uni: 5
         case .king: 6
+        case .rider: 7
         }
     }
 
@@ -28,6 +30,7 @@ public enum PieceType: RawRepresentable, Sendable {
         case .none: nil
         case .pawn: "p"
         case .horse: "n"
+        case .rider: "m"
         case .rook: "r"
         case .flanger: "f"
         case .uni: "q"
@@ -40,6 +43,7 @@ public enum PieceType: RawRepresentable, Sendable {
         case .none: .init(localized: "piece_type_none", bundle: .module)
         case .pawn: .init(localized: "piece_type_pawn", bundle: .module)
         case .horse: .init(localized: "piece_type_horse", bundle: .module)
+        case .rider: .init(localized: "piece_type_rider", bundle: .module)
         case .rook: .init(localized: "piece_type_rook", bundle: .module)
         case .flanger: .init(localized: "piece_type_flanger", bundle: .module)
         case .uni: .init(localized: "piece_type_uni", bundle: .module)
@@ -52,14 +56,25 @@ public enum PieceType: RawRepresentable, Sendable {
         return self != .king
     }
 
+    /// Piece does not freeze when it captures another piece.
+    public var skipsFreezeOnCapture: Bool {
+        return self == .horse || self == .rider
+    }
+
+    /// Piece moves like a pawn in addition to its own moves.
+    public var hasPawnMoves: Bool {
+        return self == .pawn || self == .rider
+    }
+
     /// Get the character representation for this piece type
     /// - Parameter color: The color determines case (white=uppercase, black=lowercase)
-    /// - Returns: Single character representing the piece (P/p, R/r, H/h, F/f, U/u, K/k)
+    /// - Returns: Single character representing the piece (P/p, R/r, H/h, M/m, F/f, U/u, K/k)
     public func character(for color: PieceColor) -> Character {
         let baseChar: Character = switch self {
         case .none: " "
         case .pawn: "P"
         case .horse: "H"
+        case .rider: "M"
         case .rook: "R"
         case .flanger: "F"
         case .uni: "U"
@@ -69,7 +84,7 @@ public enum PieceType: RawRepresentable, Sendable {
     }
 
     /// Parse a piece type from a character
-    /// - Parameter char: The character to parse (P/p, R/r, H/h, F/f, U/u, K/k, or space)
+    /// - Parameter char: The character to parse (P/p, R/r, H/h, M/m, F/f, U/u, K/k, or space)
     /// - Returns: The piece type, or nil if invalid
     public static func from(character char: Character) -> (type: PieceType, color: PieceColor)? {
         let color: PieceColor = char.isUppercase ? .white : .black
@@ -77,6 +92,7 @@ public enum PieceType: RawRepresentable, Sendable {
         let type: PieceType? = switch upper {
         case "P": .pawn
         case "H": .horse
+        case "M": .rider
         case "R": .rook
         case "F": .flanger
         case "U": .uni
@@ -96,6 +112,7 @@ public enum PieceType: RawRepresentable, Sendable {
         case 4: .flanger
         case 5: .uni
         case 6: .king
+        case 7: .rider
         default: .none
         }
     }

@@ -35,9 +35,7 @@ public class MoveGenerator {
         var moves: [Action] = []
         // Can't move frozen pieces (unless ignoring freeze)
         guard ignoreFreeze || !state.frozen else { return moves }
-        let color = state.color
-        let targetPositions = generateTargetPositions(from: position, state: state)
-        for targetPosition in targetPositions where checkTarget(at: targetPosition, color: color) {
+        for targetPosition in generateTargetPositions(from: position, state: state) {
             moves.append(.move(from: position, to: targetPosition))
         }
 
@@ -81,6 +79,41 @@ public class MoveGenerator {
     /// Generate target indices for a piece
     private func generateTargetPositions(from position: BoardPosition, state: Piece) -> [BoardPosition] {
         var targets: [BoardPosition] = []
+        // Pawns and riders may move into a horse of the same color, so their moves need a separate target check
+        if state.type.hasPawnMoves {
+            targets.append(contentsOf: pawnTargets(from: position, color: state.color))
+        }
+        // A pawn has no moves besides its pawn moves
+        if state.type != .pawn {
+            targets.append(contentsOf: sequenceTargets(from: position, state: state))
+        }
+        return targets
+    }
+
+    /// Generate the targets of the pawn moves of a pawn or a rider
+    private func pawnTargets(from position: BoardPosition, color: PieceColor) -> [BoardPosition] {
+        var targets: [BoardPosition] = []
+        for moveSequence in RelativePieceMoves.getMoveSequences(for: .pawn, and: color) {
+            guard let vector = moveSequence.first,
+                  let targetPosition = position + vector,
+                  checkPawnTarget(at: targetPosition, color: color)
+            else { continue }
+            targets.append(targetPosition)
+        }
+        // Pawn dash: jump two squares forward when a pawn of the same color stands directly in front
+        if let frontPosition = position + RelativePieceMoves.pawnFront(for: color),
+           board.piece(at: frontPosition).type == .pawn,
+           board.piece(at: frontPosition).color == color,
+           let targetPosition = position + RelativePieceMoves.pawnDash(for: color),
+           checkPawnTarget(at: targetPosition, color: color) {
+            targets.append(targetPosition)
+        }
+        return targets
+    }
+
+    /// Generate the targets of the move sequences of a piece
+    private func sequenceTargets(from position: BoardPosition, state: Piece) -> [BoardPosition] {
+        var targets: [BoardPosition] = []
         let type = state.type
         let color = state.color
         let moveSequences = RelativePieceMoves.getMoveSequences(for: type, and: color)
@@ -105,6 +138,12 @@ public class MoveGenerator {
         return targets
     }
     
+    /// Checks if a pawn move of the given color can go to this target field.
+    /// Besides the regular targets, a pawn may move into a horse of the same color to form a rider.
+    private func checkPawnTarget(at position: BoardPosition, color: PieceColor) -> Bool {
+        checkTarget(at: position, color: color) || board.piece(at: position).type == .horse
+    }
+
     private func checkTarget(at position: BoardPosition, color: PieceColor) -> Bool {
         guard !includeOwnPieces else { return true }
         return isEmpty(at: position) || matchesColor(color: color.opponent, at: position)

@@ -199,28 +199,66 @@ public struct Board: Hashable, Sendable {
         let piece = try piece(at: fromIndex), takenPiece = try self.piece(at: toIndex)
         guard piece.type != .none else { throw .noPieceFound }
         guard !piece.frozen else { throw .pieceFrozen }
-        clear(at: fromIndex)
-        try set(piece, at: toIndex)
+        switch effect(ofMoveFrom: fromPosition, to: toPosition) {
+        case .relocation:
+            clear(at: fromIndex)
+            try set(piece, at: toIndex)
+        case .riderSplit:
+            // The rider leaves a horse behind and continues as a pawn
+            try set(.init(type: .horse, color: piece.color), at: fromIndex)
+            try set(.init(type: .pawn, color: piece.color), at: toIndex)
+        case .pawnMerge:
+            // The pawn and the horse it moves into become a rider
+            clear(at: fromIndex)
+            try set(.init(type: .rider, color: piece.color), at: toIndex)
+        }
         return takenPiece
     }
-    
-    /// - throws: Throws if the provided indices are out of bounds, there is no piece to move back or the position to which the piece is
-    /// supposed to be moved back to is already taken by another piece.
+
+    /// Restores the two positions involved in a move to the state they had before the move.
+    /// - throws: Throws if the provided indices are out of bounds.
     /// - warning: This method does not check for move validity.
     public mutating func revert(
         from fromPosition: BoardPosition,
         to toPosition: BoardPosition,
-        reinstate takenPiece: Piece?
+        reinstate movedPiece: Piece,
+        and takenPiece: Piece
     ) throws(Error) {
-        let toIndex = toPosition.index, fromIndex = fromPosition.index
-        let piece = try piece(at: toIndex)
-        guard piece.type != .none else { throw .noPieceFound }
-        guard try self.piece(at: fromIndex).type == .none else { throw .positionTaken }
-        clear(at: toIndex)
-        try set(piece, at: fromIndex)
-        if let takenPiece {
-            try set(takenPiece, at: toIndex)
+        try set(movedPiece, at: fromPosition.index)
+        try set(takenPiece, at: toPosition.index)
+    }
+
+    // MARK: - Move Effects
+
+    /// The effect a move has on the pieces involved.
+    public enum MoveEffect: Hashable, Sendable {
+        /// The moving piece is relocated to the target position.
+        case relocation
+        /// A rider performs a pawn move: it splits into a horse on the source and a pawn on the target position.
+        case riderSplit
+        /// A pawn moves into a horse of the same color: both become a rider on the target position.
+        case pawnMerge
+    }
+
+    /// - returns: The effect the move would have on the pieces involved.
+    /// - warning: This method does not check for move validity.
+    public func effect(ofMoveFrom fromPosition: BoardPosition, to toPosition: BoardPosition) -> MoveEffect {
+        let piece = self.piece(at: fromPosition), targetPiece = self.piece(at: toPosition)
+        if piece.type == .rider, isPawnMove(from: fromPosition, to: toPosition, for: piece.color) {
+            return .riderSplit
         }
+        if piece.type == .pawn, targetPiece.type == .horse, targetPiece.color == piece.color {
+            return .pawnMerge
+        }
+        return .relocation
+    }
+
+    /// Indicates whether a move could have been made by a pawn of the given color.
+    private func isPawnMove(from fromPosition: BoardPosition, to toPosition: BoardPosition, for color: PieceColor) -> Bool {
+        let conventionalMoves = RelativePieceMoves.getMoveSequences(for: .pawn, and: color).flatMap(\.self)
+        let pawnDash = RelativePieceMoves.pawnDash(for: color)
+        let moves = conventionalMoves + [pawnDash]
+        return moves.contains { fromPosition + $0 == toPosition }
     }
 
     // MARK: - Search

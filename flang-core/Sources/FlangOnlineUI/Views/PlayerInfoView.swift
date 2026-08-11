@@ -46,7 +46,17 @@ public struct PlayerInfoView: View {
     }
 
     private func formatTimer(for date: Date) -> AttributedString {
+        
         let timeLeftAtReferenceDate = TimeInterval(playerInfo.time) / 1000
+        
+        if (timeLeftAtReferenceDate > 60 * 60) {
+            let formatter = DateComponentsFormatter()
+            formatter.allowedUnits = [.day, .hour]
+            formatter.maximumUnitCount = 1
+            formatter.unitsStyle = .abbreviated
+            return AttributedString(formatter.string(from: timeLeftAtReferenceDate) ?? "")
+        }
+        
         let referenceDate = playerIsAtMove ? lastUpdate : date
         let endDate = referenceDate.addingTimeInterval(timeLeftAtReferenceDate)
         let range = referenceDate..<endDate
